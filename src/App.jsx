@@ -155,7 +155,7 @@ function AppInner() {
 
       <MarqueeBanner />
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-4 md:px-6 py-5 sm:py-8 max-lg:landscape:py-3 max-lg:landscape:space-y-3 space-y-5 sm:space-y-7 safe-pb">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-4 md:px-6 pt-5 sm:pt-8 pb-12 sm:pb-16 max-lg:landscape:py-3 max-lg:landscape:space-y-3 space-y-5 sm:space-y-7 safe-pb">
         {/* Stats */}
         <section className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-lg:landscape:gap-2 animate-fade-in">
           {[
