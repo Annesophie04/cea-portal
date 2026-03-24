@@ -226,7 +226,7 @@ export default function WelcomePage({ onEnter }) {
           <div className="max-w-4xl mx-auto">
             <div
               className="welcome-cta-final relative overflow-hidden rounded-3xl p-10 md:p-14 text-center border border-white/10"
-              style={{ background: 'linear-gradient(135deg, #0a0a0a 0%, #141414 40%, #1a1a1a 70%, #0a0a0a 100%)' }}
+              style={{ background: 'linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1c2128 70%, #0d1117 100%)' }}
             >
               <div className="absolute inset-0 opacity-30 pointer-events-none">
                 <div className="absolute top-0 left-1/4 w-80 h-80 bg-copper/20 rounded-full blur-3xl" />
