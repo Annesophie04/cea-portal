@@ -4,6 +4,8 @@ import {
   Moon, Sun, Video, DollarSign, Lightbulb, Image, Shield, Globe, ChevronDown, MapPin,
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
+import WelcomeGalleryCarousel from './WelcomeGalleryCarousel';
+import { WELCOME_GALLERY_IMAGES } from '../data/welcomeGallery';
 
 /* Dégradés d’icônes harmonisés (cuivre, or, ardoise) — pas d’arc-en-ciel */
 const ICON_GRADIENTS = [
@@ -182,6 +184,22 @@ export default function WelcomePage({ onEnter }) {
 
         {/* Séparateur */}
         <div className="relative h-px max-w-4xl mx-auto px-4 bg-gradient-to-r from-transparent via-border to-transparent dark:via-white/10" />
+
+        {/* Galerie photos (liste figée dans le code — non modifiable depuis l’app) */}
+        <section className="relative py-12 md:py-16 px-4 max-lg:landscape:py-8" aria-label="Galerie">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-8 md:mb-10 max-lg:landscape:mb-5">
+              <p className="text-xs font-bold uppercase tracking-[0.3em] text-copper mb-3">En images</p>
+              <h2 className="text-2xl md:text-3xl font-extrabold text-primary tracking-tight">
+                Le portail en un coup d’œil
+              </h2>
+              <p className="mt-3 text-sm md:text-base text-text-muted max-w-lg mx-auto leading-relaxed">
+                Quelques visuels du pôle — le diaporama est défini dans le site, pas par les visiteurs.
+              </p>
+            </div>
+            <WelcomeGalleryCarousel images={WELCOME_GALLERY_IMAGES} />
+          </div>
+        </section>
 
         {/* Grille fonctionnalités */}
         <section id="welcome-features" className="relative py-16 md:py-24 max-lg:landscape:py-8 px-4 scroll-mt-20">
