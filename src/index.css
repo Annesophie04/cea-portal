@@ -46,29 +46,29 @@
 /* ─── MODE SOMBRE ─── */
 .dark {
   color-scheme: dark;
-  --color-primary: #f0f0f5;
-  --color-primary-light: #222228;
+  --color-primary: #e8eef6;
+  --color-primary-light: #1c2a3a;
   --color-primary-dark: #06060a;
-  --color-gold: #d4a574;
-  --color-gold-light: #e8c4a8;
-  --color-gold-dark: #a67c52;
-  --color-copper: #d4a574;
-  --color-copper-light: #e8c4a8;
-  --color-surface: #080810;
-  --color-surface-alt: #0e0e16;
-  --color-card: #12121a;
+  --color-gold: #d4af6c;
+  --color-gold-light: #e7c98e;
+  --color-gold-dark: #9b7335;
+  --color-copper: #c8924a;
+  --color-copper-light: #ddb06f;
+  --color-surface: #08111a;
+  --color-surface-alt: #101c28;
+  --color-card: #152232;
   --color-border: rgba(255, 255, 255, 0.08);
-  --color-text: #ececf0;
-  --color-text-muted: #ababba;
-  --color-text-light: #78788a;
+  --color-text: #e6edf6;
+  --color-text-muted: #a7b7cb;
+  --color-text-light: #7890ad;
   --color-success: #4ade80;
   --color-success-light: #6ee7a0;
   --color-warning: #f59e0b;
   --color-danger: #f87171;
-  --color-dossier-from: #3f3d56;
-  --color-dossier-to: #5c5878;
-  --color-archive-from: #52525b;
-  --color-archive-to: #787887;
+  --color-dossier-from: #203247;
+  --color-dossier-to: #365777;
+  --color-archive-from: #2a3a4a;
+  --color-archive-to: #4c6074;
 
   /* Badges de couleur adaptés */
   --color-orange-50: rgba(251, 146, 60, 0.12);
@@ -128,9 +128,9 @@ body {
 .dark body {
   background:
     radial-gradient(ellipse 120% 80% at 50% -20%, rgba(212, 165, 116, 0.06) 0%, transparent 50%),
-    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(139, 92, 246, 0.04) 0%, transparent 40%),
+    radial-gradient(ellipse 80% 60% at 100% 0%, rgba(34, 116, 165, 0.1) 0%, transparent 40%),
     radial-gradient(ellipse 60% 50% at 0% 100%, rgba(24, 24, 30, 0.6) 0%, transparent 50%),
-    linear-gradient(170deg, #050508 0%, #070710 40%, #060610 100%);
+    linear-gradient(170deg, #050b12 0%, #08131d 40%, #0a141f 100%);
   background-attachment: fixed;
   color: var(--color-text);
   text-rendering: optimizeLegibility;
@@ -397,10 +397,10 @@ footer[class*="bg-gradient"] {
 }
 
 .dark .from-\[\#111119\] { --tw-gradient-from: #040408 !important; }
-.dark .from-\[\#1c1c2b\] { --tw-gradient-from: #08080e !important; }
-.dark .via-\[\#1c1c2b\] { --tw-gradient-via: #0a0a12 !important; }
-.dark .to-\[\#1c1c2b\] { --tw-gradient-to: #0a0a12 !important; }
-.dark .to-\[\#2a2a3d\] { --tw-gradient-to: #10101a !important; }
+.dark .from-\[\#1c1c2b\] { --tw-gradient-from: #0f1b28 !important; }
+.dark .via-\[\#1c1c2b\] { --tw-gradient-via: #142334 !important; }
+.dark .to-\[\#1c1c2b\] { --tw-gradient-to: #142334 !important; }
+.dark .to-\[\#2a2a3d\] { --tw-gradient-to: #20364e !important; }
 .dark .from-\[\#2d7a4f\] { --tw-gradient-from: #14532d !important; }
 .dark .to-\[\#3d9963\] { --tw-gradient-to: #166534 !important; }
 
@@ -411,26 +411,26 @@ footer[class*="bg-gradient"] {
 
 /* ─── DARK: GLASS MORPHISM ─── */
 .dark .bg-card {
-  background-color: rgba(18, 18, 26, 0.85) !important;
+  background-color: rgba(21, 34, 50, 0.85) !important;
   backdrop-filter: blur(16px) saturate(1.2);
   -webkit-backdrop-filter: blur(16px) saturate(1.2);
   border-color: rgba(255, 255, 255, 0.07);
 }
 
 .dark .bg-surface {
-  background-color: rgba(8, 8, 16, 0.7) !important;
+  background-color: rgba(8, 17, 26, 0.72) !important;
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
 .dark .bg-surface-alt {
-  background-color: rgba(14, 14, 22, 0.7) !important;
+  background-color: rgba(16, 28, 40, 0.72) !important;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
 
 .dark .hover\:bg-surface-alt:hover {
-  background-color: rgba(22, 22, 32, 0.85) !important;
+  background-color: rgba(24, 39, 56, 0.88) !important;
 }
 
 .dark [class*="bg-white/90"] {
@@ -482,7 +482,7 @@ footer[class*="bg-gradient"] {
   opacity: 0.85;
   background-image:
     radial-gradient(ellipse 95% 65% at 50% -18%, rgba(212, 165, 116, 0.12) 0%, transparent 58%),
-    radial-gradient(ellipse 75% 50% at 100% 8%, rgba(99, 102, 241, 0.06) 0%, transparent 48%),
+    radial-gradient(ellipse 75% 50% at 100% 8%, rgba(34, 116, 165, 0.11) 0%, transparent 48%),
     radial-gradient(ellipse 65% 50% at 0% 95%, rgba(24, 24, 30, 0.55) 0%, transparent 52%);
 }
 
@@ -504,7 +504,7 @@ footer[class*="bg-gradient"] {
   box-shadow: 0 4px 24px rgba(15, 23, 42, 0.06);
 }
 .dark .welcome-stat-strip {
-  background: rgba(28, 28, 38, 0.65);
+  background: rgba(21, 34, 50, 0.7);
   border-color: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
