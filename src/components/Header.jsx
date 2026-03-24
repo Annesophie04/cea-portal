@@ -39,10 +39,10 @@ export default function Header({ onExport, onImport, onAdd, onShowLanding }) {
               <p className="text-[9px] sm:text-[10px] uppercase tracking-[0.28em] sm:tracking-[0.35em] text-copper-light font-bold max-lg:landscape:truncate">
                 State of San Andreas
               </p>
-              <h1 className="text-base sm:text-xl md:text-2xl font-extrabold mt-0.5 leading-tight tracking-tight truncate max-lg:landscape:text-sm">
+              <h1 className="text-base sm:text-xl md:text-2xl font-extrabold mt-0.5 leading-tight tracking-tight truncate max-lg:landscape:text-sm text-white">
                 Portail documentaire C.E.A
               </h1>
-              <p className="text-[11px] text-white/60 mt-0.5 font-medium tracking-wide max-lg:landscape:hidden">
+              <p className="text-[11px] mt-0.5 font-medium tracking-wide max-lg:landscape:hidden" style={{ color: 'rgba(255,255,255,0.6)' }}>
                 Communication &bull; Événementiel &bull; Association
               </p>
             </div>
