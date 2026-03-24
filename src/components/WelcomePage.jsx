@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import {
   FileText, FolderOpen, ShieldCheck, Users, CalendarDays, ArrowRight, Sparkles,
-  Moon, Sun, Video, DollarSign, Lightbulb, Image, Shield, Globe, ChevronDown, MapPin,
+  Moon, Sun, Video, DollarSign, Lightbulb, Image, Shield, Globe, ChevronDown,
 } from 'lucide-react';
 import { useTheme } from '../hooks/useTheme';
+import SkipToContent from './SkipToContent';
 
 /* Dégradés d’icônes harmonisés (cuivre, or, ardoise) — pas d’arc-en-ciel */
 const ICON_GRADIENTS = [
@@ -51,6 +52,7 @@ export default function WelcomePage({ onEnter }) {
 
   return (
     <div className="min-h-[100dvh] flex flex-col relative overflow-x-hidden safe-pb">
+      <SkipToContent />
       <div className="absolute inset-0 bg-surface pointer-events-none" />
       <div className="welcome-mesh absolute inset-0 pointer-events-none" aria-hidden />
       <div className="welcome-hero-glow absolute inset-x-0 top-0 pointer-events-none" aria-hidden />
@@ -98,7 +100,7 @@ export default function WelcomePage({ onEnter }) {
         </div>
       </nav>
 
-      <main className="relative z-10 flex-1">
+      <main id="contenu-principal" tabIndex={-1} className="relative z-10 flex-1">
         {/* Hero */}
         <section className="relative min-h-[100dvh] max-lg:landscape:min-h-0 max-lg:landscape:py-6 max-lg:landscape:pb-10 max-lg:landscape:pt-14 flex flex-col items-center justify-center px-4 pb-24 pt-20 md:pt-24 max-lg:landscape:justify-start">
           <div

@@ -191,6 +191,54 @@ button:focus-visible {
   outline: 2px solid var(--color-gold);
   outline-offset: 2px;
 }
+
+a:focus-visible {
+  outline: 2px solid var(--color-copper);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+.dark a:focus-visible {
+  outline-color: rgba(212, 165, 116, 0.85);
+}
+
+/* Lien « Aller au contenu » — hors écran jusqu’au focus clavier */
+.cea-skip-link {
+  position: fixed;
+  left: 0.75rem;
+  top: 0;
+  z-index: 10001;
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  border-radius: 0.75rem;
+  text-decoration: none;
+  background: linear-gradient(135deg, #102a43 0%, #1c3d5c 100%);
+  color: #fffef8;
+  box-shadow: 0 4px 20px rgba(16, 42, 67, 0.35);
+  transform: translateY(-120%);
+  transition: transform 0.2s ease;
+}
+.dark .cea-skip-link {
+  background: linear-gradient(135deg, #1a1a2e 0%, #2d2d42 100%);
+  color: #f5f0e8;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.45);
+}
+.cea-skip-link:focus {
+  transform: translateY(0.75rem);
+  outline: 2px solid var(--color-gold);
+  outline-offset: 2px;
+}
+
+/* Contour discret quand le contenu principal reçoit le focus (lien d’évitement) */
+#contenu-principal:focus-visible {
+  outline: 2px solid var(--color-copper);
+  outline-offset: 0.25rem;
+  border-radius: 0.75rem;
+}
+.dark #contenu-principal:focus-visible {
+  outline-color: rgba(212, 165, 116, 0.75);
+}
+
 .dark input:focus, .dark textarea:focus, .dark select:focus {
   outline-color: rgba(212, 165, 116, 0.6);
   box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.15);
@@ -267,6 +315,27 @@ button:focus-visible {
 .animate-fade-in { animation: fadeIn 0.4s ease-out both; }
 .animate-slide-up { animation: slideUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .animate-tab-in { animation: tabFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* Moins d’animations si l’utilisateur le demande (accessibilité) */
+@media (prefers-reduced-motion: reduce) {
+  body::after {
+    animation: none !important;
+  }
+  .animate-fade-in,
+  .animate-slide-up,
+  .animate-tab-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .cea-skip-link {
+    transition: none;
+  }
+  .tab-skeleton .animate-pulse {
+    animation: none !important;
+    opacity: 0.55;
+  }
+}
 
 /* ─── STAGGERED FADE-IN ─── */
 .stagger-1 { animation-delay: 0.05s; }

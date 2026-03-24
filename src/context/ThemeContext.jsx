@@ -17,6 +17,10 @@ export function ThemeProvider({ children }) {
   useLayoutEffect(() => {
     document.documentElement.classList.toggle('dark', dark);
     localStorage.setItem(STORAGE_KEY, dark ? 'dark' : 'light');
+    const meta = document.querySelector('meta[name="theme-color"]');
+    if (meta) {
+      meta.setAttribute('content', dark ? '#06060e' : '#102a43');
+    }
   }, [dark]);
 
   const toggle = useCallback(() => setDarkState((d) => !d), []);

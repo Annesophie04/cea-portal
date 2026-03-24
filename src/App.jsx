@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useRef, useState, lazy, Suspense } from 'react';
 import WelcomePage from './components/WelcomePage';
 import {
   FileText, FolderOpen, ShieldCheck, Layers, Users,
@@ -12,21 +12,24 @@ import StatCard from './components/StatCard';
 import SearchFilters from './components/SearchFilters';
 import DocumentList from './components/DocumentList';
 import DocumentModal from './components/DocumentModal';
-import GuideTab from './components/GuideTab';
-import MemoSection from './components/MemoSection';
-import GuidePage from './components/GuidePage';
-import AssociationsTab from './components/AssociationsTab';
-import VideosTab from './components/VideosTab';
-import ComptabiliteTab from './components/ComptabiliteTab';
-import EvenementsTab from './components/EvenementsTab';
-import IdeesTab from './components/IdeesTab';
-import AffichesTab from './components/AffichesTab';
-import StockageTab from './components/StockageTab';
-import LocationTab from './components/LocationTab';
 import { ToastProvider, useToast } from './components/Toast';
 import ScrollToTop from './components/ScrollToTop';
 import MarqueeBanner from './components/MarqueeBanner';
 import BackgroundMusic from './components/BackgroundMusic';
+import SkipToContent from './components/SkipToContent';
+import TabPanelSkeleton from './components/TabPanelSkeleton';
+
+const MemoSection = lazy(() => import('./components/MemoSection'));
+const GuidePage = lazy(() => import('./components/GuidePage'));
+const AssociationsTab = lazy(() => import('./components/AssociationsTab'));
+const EvenementsTab = lazy(() => import('./components/EvenementsTab'));
+const VideosTab = lazy(() => import('./components/VideosTab'));
+const ComptabiliteTab = lazy(() => import('./components/ComptabiliteTab'));
+const IdeesTab = lazy(() => import('./components/IdeesTab'));
+const AffichesTab = lazy(() => import('./components/AffichesTab'));
+const StockageTab = lazy(() => import('./components/StockageTab'));
+const LocationTab = lazy(() => import('./components/LocationTab'));
+const GuideTab = lazy(() => import('./components/GuideTab'));
 
 const TABS = [
   { key: 'documents', label: 'Documents', icon: FileText },
@@ -145,6 +148,7 @@ function AppInner() {
 
   return (
     <div className="min-h-[100dvh] flex flex-col">
+      <SkipToContent />
       <Header
         onExport={handleExport}
         onImport={handleImport}
@@ -157,7 +161,11 @@ function AppInner() {
 
       <MarqueeBanner />
 
-      <main className="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-4 md:px-6 pt-5 sm:pt-8 pb-12 sm:pb-16 max-lg:landscape:py-3 max-lg:landscape:space-y-3 space-y-5 sm:space-y-7 safe-pb">
+      <main
+        id="contenu-principal"
+        tabIndex={-1}
+        className="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-4 md:px-6 pt-5 sm:pt-8 pb-12 sm:pb-16 max-lg:landscape:py-3 max-lg:landscape:space-y-3 space-y-5 sm:space-y-7 safe-pb"
+      >
         {/* Stats */}
         <section className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-lg:landscape:gap-2 animate-fade-in">
           {[
@@ -215,22 +223,24 @@ function AppInner() {
           </button>
         </div>
 
-        {/* Tab content */}
+        {/* Tab content — onglets lourds chargés à la demande (chunks séparés) */}
         <div className="animate-tab-in" key={activeTab}>
-          {activeTab === 'documents' && (
-            <DocumentList grouped={grouped} onEdit={openEdit} onDelete={handleDelete} />
-          )}
-          {activeTab === 'memo' && <MemoSection documents={documents} />}
-          {activeTab === 'procedures' && <GuidePage />}
-          {activeTab === 'associations' && <AssociationsTab />}
-          {activeTab === 'evenements' && <EvenementsTab />}
-          {activeTab === 'videos' && <VideosTab />}
-          {activeTab === 'comptabilite' && <ComptabiliteTab />}
-          {activeTab === 'idees' && <IdeesTab />}
-          {activeTab === 'affiches' && <AffichesTab />}
-          {activeTab === 'stockage' && <StockageTab />}
-          {activeTab === 'location' && <LocationTab />}
-          {activeTab === 'guide' && <GuideTab />}
+          <Suspense fallback={<TabPanelSkeleton />}>
+            {activeTab === 'documents' && (
+              <DocumentList grouped={grouped} onEdit={openEdit} onDelete={handleDelete} />
+            )}
+            {activeTab === 'memo' && <MemoSection documents={documents} />}
+            {activeTab === 'procedures' && <GuidePage />}
+            {activeTab === 'associations' && <AssociationsTab />}
+            {activeTab === 'evenements' && <EvenementsTab />}
+            {activeTab === 'videos' && <VideosTab />}
+            {activeTab === 'comptabilite' && <ComptabiliteTab />}
+            {activeTab === 'idees' && <IdeesTab />}
+            {activeTab === 'affiches' && <AffichesTab />}
+            {activeTab === 'stockage' && <StockageTab />}
+            {activeTab === 'location' && <LocationTab />}
+            {activeTab === 'guide' && <GuideTab />}
+          </Suspense>
         </div>
       </main>
 

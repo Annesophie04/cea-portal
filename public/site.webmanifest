@@ -1,0 +1,19 @@
+{
+  "name": "Portail C.E.A — State of San Andreas",
+  "short_name": "Portail C.E.A",
+  "description": "Communication, événementiel et association — outils documentaires du C.E.A.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#e8edf4",
+  "theme_color": "#102a43",
+  "icons": [
+    {
+      "src": "./logo-cea.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
