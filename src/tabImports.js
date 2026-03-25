@@ -13,6 +13,7 @@ export const tabImports = {
   stockage: () => import('./components/StockageTab'),
   location: () => import('./components/LocationTab'),
   guide: () => import('./components/GuideTab'),
+  codes: () => import('./components/codes/CodesTab'),
 };
 
 /** Précharge le chunk d’un onglet (survol ou idle) — sans effet sur « documents ». */

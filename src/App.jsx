@@ -2,7 +2,7 @@ import { useCallback, useEffect, useRef, useState, lazy, Suspense } from 'react'
 import WelcomePage from './components/WelcomePage';
 import {
   FileText, FolderOpen, ShieldCheck, Layers, Users,
-  Video, DollarSign, CalendarDays, Lightbulb, Image, Database, MapPin,
+  Video, DollarSign, CalendarDays, Lightbulb, Image, Database, MapPin, Scale,
   ChevronLeft, ChevronRight,
 } from 'lucide-react';
 import { useDocuments } from './hooks/useDocuments';
@@ -18,6 +18,7 @@ import MarqueeBanner from './components/MarqueeBanner';
 import BackgroundMusic from './components/BackgroundMusic';
 import SkipToContent from './components/SkipToContent';
 import TabPanelSkeleton from './components/TabPanelSkeleton';
+import ManagementCopilot from './components/ManagementCopilot';
 import { tabImports, prefetchTabPanel, prefetchIdlePopularTabs } from './tabImports';
 import { fireConfetti } from './utils/confetti';
 
@@ -32,6 +33,7 @@ const AffichesTab = lazy(tabImports.affiches);
 const StockageTab = lazy(tabImports.stockage);
 const LocationTab = lazy(tabImports.location);
 const GuideTab = lazy(tabImports.guide);
+const CodesTab = lazy(tabImports.codes);
 
 const TABS = [
   { key: 'documents', label: 'Documents', icon: FileText },
@@ -45,6 +47,7 @@ const TABS = [
   { key: 'affiches', label: 'Affiches', icon: Image },
   { key: 'stockage', label: 'Stockage', icon: Database },
   { key: 'location', label: 'Location', icon: MapPin },
+  { key: 'codes', label: 'Codes', icon: Scale },
   { key: 'guide', label: 'Aide', icon: Layers },
 ];
 
@@ -280,6 +283,7 @@ function AppInner() {
             {activeTab === 'affiches' && <AffichesTab />}
             {activeTab === 'stockage' && <StockageTab />}
             {activeTab === 'location' && <LocationTab />}
+            {activeTab === 'codes' && <CodesTab />}
             {activeTab === 'guide' && <GuideTab />}
           </Suspense>
         </div>
@@ -299,6 +303,11 @@ function AppInner() {
         </div>
       </footer>
 
+      <ManagementCopilot
+        documents={documents}
+        activeTab={activeTab}
+        onNavigateTab={setActiveTab}
+      />
       <ScrollToTop />
       <BackgroundMusic />
 

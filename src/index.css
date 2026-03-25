@@ -1763,6 +1763,194 @@ select {
   will-change: transform;
 }
 
+/* ─── COPILOT ─── */
+
+/* FAB launcher — positionnement avec marge 24px */
+.copilot-fab-launcher {
+  right: max(1.5rem, env(safe-area-inset-right, 0px));
+  bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+}
+
+/* Pulse doré pour le FAB quand fermé */
+.copilot-fab-pulse {
+  box-shadow:
+    0 4px 16px -2px rgba(184, 134, 11, 0.35),
+    0 0 0 0 rgba(184, 134, 11, 0.25);
+  animation: copilotFabPulse 2.8s ease-in-out infinite;
+}
+@keyframes copilotFabPulse {
+  0%, 100% { box-shadow: 0 4px 16px -2px rgba(184, 134, 11, 0.35), 0 0 0 0 rgba(184, 134, 11, 0.25); }
+  50% { box-shadow: 0 6px 20px -2px rgba(184, 134, 11, 0.45), 0 0 0 6px rgba(184, 134, 11, 0); }
+}
+
+/* Icon glow dans le header copilot */
+.copilot-icon-glow {
+  box-shadow: 0 0 8px rgba(184, 134, 11, 0.15);
+}
+
+/* Intro card — apparition douce */
+.copilot-intro {
+  animation: copilotFadeIn 0.4s ease-out both;
+  animation-delay: 0.15s;
+}
+@keyframes copilotFadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Zone de messages scrollable */
+.copilot-messages::-webkit-scrollbar { width: 3px; }
+.copilot-messages::-webkit-scrollbar-track { background: transparent; }
+.copilot-messages::-webkit-scrollbar-thumb { background: rgba(184, 134, 11, 0.15); border-radius: 8px; }
+
+/* Bulles de messages */
+.copilot-msg { max-width: 92%; }
+.copilot-msg-user {
+  align-self: flex-end;
+  background: linear-gradient(135deg, rgba(184, 134, 11, 0.12), rgba(212, 175, 55, 0.08));
+  border: 1px solid rgba(184, 134, 11, 0.12);
+  border-radius: 0.875rem 0.875rem 0.25rem 0.875rem;
+  padding: 0.5rem 0.75rem;
+}
+.copilot-msg-assistant {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(194, 204, 218, 0.08);
+  border-radius: 0.875rem 0.875rem 0.875rem 0.25rem;
+  padding: 0.5rem 0.75rem;
+}
+.dark .copilot-msg-assistant {
+  background: rgba(255, 255, 255, 0.02);
+  border-color: rgba(212, 175, 55, 0.06);
+}
+
+/* Texte assistant — listes et paragraphes */
+.copilot-response p { margin-bottom: 0.25rem; }
+.copilot-response p:last-child { margin-bottom: 0; }
+
+/* Chips de navigation */
+.copilot-chip-nav {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(184, 134, 11, 0.2);
+  background: rgba(184, 134, 11, 0.06);
+  color: var(--color-copper-light);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.copilot-chip-nav:hover:not(:disabled) {
+  background: rgba(184, 134, 11, 0.14);
+  border-color: rgba(184, 134, 11, 0.35);
+}
+.copilot-chip-nav:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Chips de suggestions */
+.copilot-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(194, 204, 218, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.copilot-chip:hover:not(:disabled) {
+  background: rgba(184, 134, 11, 0.08);
+  border-color: rgba(184, 134, 11, 0.25);
+  color: var(--color-copper-light);
+}
+.copilot-chip:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Actions subtiles (dashed) */
+.copilot-chip-subtle {
+  border-style: dashed;
+  opacity: 0.75;
+}
+.copilot-chip-subtle:hover:not(:disabled) { opacity: 1; }
+
+/* Input area */
+.copilot-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 0.75rem;
+  border: 1px solid rgba(194, 204, 218, 0.15);
+  background: rgba(255, 255, 255, 0.03);
+  padding: 0.25rem 0.25rem 0.25rem 0.625rem;
+  transition: border-color 0.2s;
+}
+.copilot-input-wrap:focus-within {
+  border-color: rgba(184, 134, 11, 0.35);
+  box-shadow: 0 0 0 2px rgba(184, 134, 11, 0.08);
+}
+.copilot-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-size: 0.8125rem;
+  color: var(--color-text);
+  min-width: 0;
+}
+.copilot-input::placeholder {
+  color: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+/* Bouton send */
+.copilot-send-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 0.5rem;
+  color: var(--color-text-muted);
+  opacity: 0.4;
+  cursor: pointer;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.copilot-send-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+.copilot-send-btn-active {
+  opacity: 1;
+  color: var(--color-copper);
+  background: rgba(184, 134, 11, 0.1);
+  transform: scale(1.05);
+  box-shadow: 0 0 8px rgba(184, 134, 11, 0.15);
+}
+
+/* Indicateur de frappe (dots) */
+.copilot-typing {
+  display: flex;
+  gap: 3px;
+  padding: 0.375rem 0;
+}
+.copilot-typing span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--color-copper-light);
+  opacity: 0.4;
+  animation: copilotDot 1.2s ease-in-out infinite;
+}
+.copilot-typing span:nth-child(2) { animation-delay: 0.15s; }
+.copilot-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes copilotDot {
+  0%, 60%, 100% { opacity: 0.3; transform: scale(0.85); }
+  30% { opacity: 0.9; transform: scale(1.1); }
+}
+
 /* ─── PRINT STYLES ─── */
 @media print {
   body::before, body::after { display: none !important; }
