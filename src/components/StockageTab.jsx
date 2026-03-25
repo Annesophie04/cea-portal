@@ -1,6 +1,92 @@
 import { useState, useEffect, useCallback } from 'react';
-import { Database, Plus, Trash2, Save, X, ChevronDown, ChevronUp, Pencil, GripVertical, CheckSquare, Square, ListPlus } from 'lucide-react';
+import { Database, Plus, Trash2, Save, X, ChevronDown, ChevronUp, Pencil, CheckSquare, Square, ListPlus } from 'lucide-react';
 import { supabase } from '../lib/supabase';
+
+/* ── Seed : liste Alcool pré-remplie ── */
+const SEED_ALCOOL = {
+  titre: 'Alcool',
+  description: 'Inventaire complet des boissons alcoolisées en stock',
+  couleur: 'purple',
+  items: [
+    { id: '1', text: 'Whisky Coca — 235x (23.5 kg)', done: false, icon: '🥃' },
+    { id: '2', text: 'The Special Gal — 57x (5.7 kg)', done: false, icon: '🍸' },
+    { id: '3', text: 'Cabernet Sauvignon — 1328x (132.8 kg)', done: false, icon: '🍷' },
+    { id: '4', text: 'Cabernet Sauvignon — 34x (3.4 kg)', done: false, icon: '🍷' },
+    { id: '5', text: 'Eau de Vie — 350x (35 kg)', done: false, icon: '🍶' },
+    { id: '6', text: 'Tequila Dorada — 3x (0.3 kg)', done: false, icon: '🍹' },
+    { id: '7', text: 'The Special Bat — 7x (0.7 kg)', done: false, icon: '🍸' },
+    { id: '8', text: 'Billonger Bond — 66x (6.6 kg)', done: false, icon: '🍺' },
+    { id: '9', text: 'Billonger Bond — 24x (2.4 kg)', done: false, icon: '🍺' },
+    { id: '10', text: 'Billonger Bond — 310x (31 kg)', done: false, icon: '🍺' },
+    { id: '11', text: 'Saké — 387x (38.7 kg)', done: false, icon: '🍶' },
+    { id: '12', text: 'Saké — 149x (14.9 kg)', done: false, icon: '🍶' },
+    { id: '13', text: 'Saké — 32x (3.2 kg)', done: false, icon: '🍶' },
+    { id: '14', text: 'Bière Denvers — 195x (19.5 kg)', done: false, icon: '🍺' },
+    { id: '15', text: 'Bière Denvers — 549x (54.9 kg)', done: false, icon: '🍺' },
+    { id: '16', text: 'Bière Denvers R — 272x (27.2 kg)', done: false, icon: '🍺' },
+    { id: '17', text: 'Bière Denvers R — 54x (5.4 kg)', done: false, icon: '🍺' },
+    { id: '18', text: 'Bière Denvers P — 375x (37.5 kg)', done: false, icon: '🍺' },
+    { id: '19', text: 'Bière Denvers P — 50x (5 kg)', done: false, icon: '🍺' },
+    { id: '20', text: 'Bière Denvers T — 192x (19.2 kg)', done: false, icon: '🍺' },
+    { id: '21', text: 'Bière Denvers T — 58x (5.8 kg)', done: false, icon: '🍺' },
+    { id: '22', text: 'Ouzo — 59x (5.9 kg)', done: false, icon: '🥃' },
+    { id: '23', text: 'Mojito — 931x (93.1 kg)', done: false, icon: '🍹' },
+    { id: '24', text: 'The Special Mo — 214x (21.4 kg)', done: false, icon: '🍸' },
+    { id: '25', text: 'The Special Tec — 10x (1 kg)', done: false, icon: '🍸' },
+    { id: '26', text: 'The Special Tec — 86x (8.6 kg)', done: false, icon: '🍸' },
+    { id: '27', text: 'Le Spéciale Diam — 629x (62.9 kg)', done: false, icon: '💎' },
+    { id: '28', text: 'Skyy — 36x (3.6 kg)', done: false, icon: '🍸' },
+    { id: '29', text: 'Skyy — 13x (1.3 kg)', done: false, icon: '🍸' },
+    { id: '30', text: 'The Special Irish — 5x (0.5 kg)', done: false, icon: '☘️' },
+    { id: '31', text: 'Ti Punch — 895x (89.5 kg)', done: false, icon: '🍹' },
+    { id: '32', text: 'Beach House — 643x (64.3 kg)', done: false, icon: '🏖️' },
+    { id: '33', text: 'Beach House — 74x (7.4 kg)', done: false, icon: '🏖️' },
+    { id: '34', text: 'Bourbon Original — 2x (0.2 kg)', done: false, icon: '🥃' },
+    { id: '35', text: 'Bourbon Original — 12x (1.2 kg)', done: false, icon: '🥃' },
+    { id: '36', text: 'Bourbon Original — 804x (80.4 kg)', done: false, icon: '🥃' },
+    { id: '37', text: 'Kentucky Peach — 134x (13.4 kg)', done: false, icon: '🍑' },
+    { id: '38', text: 'The Special Yell — 34x (3.4 kg)', done: false, icon: '🍸' },
+  ],
+};
+
+/* ── Seed : liste Nourriture pré-remplie ── */
+const SEED_NOURRITURE = {
+  titre: 'Nourriture',
+  description: 'Stock alimentaire — produits et boissons non alcoolisées',
+  couleur: 'orange',
+  items: [
+    { id: 'n1', text: 'Fynix — 1 840x (184 g)', done: false, icon: '🥤' },
+    { id: 'n2', text: 'Fynix — 40x (4 g)', done: false, icon: '🥤' },
+    { id: 'n3', text: 'Tiramisus — 1 197x (3.591 kg)', done: false, icon: '🍰' },
+    { id: 'n4', text: 'Fruits — 1x (0.1 g)', done: false, icon: '🍇' },
+    { id: 'n5', text: 'Frappuccino — 49x (49 g)', done: false, icon: '☕' },
+    { id: 'n6', text: 'Jus d\'orange — 13 095x (1.31 kg)', done: false, icon: '🍊' },
+    { id: 'n7', text: 'Carpaccio de saumon — 17x (34 g)', done: false, icon: '🐟' },
+    { id: 'n8', text: 'Jus de Cerises — 5 458x (545.8 g)', done: false, icon: '🍒' },
+    { id: 'n9', text: 'Lasagne — 229x (687 g)', done: false, icon: '🍝' },
+    { id: 'n10', text: 'Eau — 5x (0.5 g)', done: false, icon: '💧' },
+    { id: 'n11', text: 'Frites — 630x (63 g)', done: false, icon: '🍟' },
+  ],
+};
+
+/* ── Seed : liste Surplus pré-remplie ── */
+const SEED_SURPLUS = {
+  titre: 'Surplus',
+  description: 'Stock surplus — produits divers en réserve',
+  couleur: 'green',
+  items: [
+    { id: 's1', text: 'Purple Queen — 32x (3.2 g)', done: false, icon: '🌿' },
+    { id: 's2', text: 'Critical Kush — 70x (7 g)', done: false, icon: '🌿' },
+    { id: 's3', text: 'Monster Royal G — 17x (1.7 g)', done: false, icon: '🌿' },
+    { id: 's4', text: 'Lemon Haze — 20x (2 g)', done: false, icon: '🌿' },
+    { id: 's5', text: 'Journaux — 1x (50 g)', done: false, icon: '📰' },
+    { id: 's6', text: 'Northern Light — 23x (2.3 g)', done: false, icon: '🌿' },
+    { id: 's7', text: 'Lingette anti-graisse — 1x (0.1 g)', done: false, icon: '🧻' },
+    { id: 's8', text: 'Royal Gorilla — 40x (4 g)', done: false, icon: '🌿' },
+  ],
+};
+
+const SEED_LISTS = [SEED_ALCOOL, SEED_NOURRITURE, SEED_SURPLUS];
 
 const COLORS = [
   { name: 'Bleu', value: 'blue', bg: 'bg-blue-50', border: 'border-blue-200', text: 'text-blue-700', dark: 'dark:bg-blue-500/10 dark:border-blue-500/20 dark:text-blue-400' },
@@ -23,14 +109,28 @@ export default function StockageTab() {
   const [expandedList, setExpandedList] = useState(null);
   const [newItemText, setNewItemText] = useState({});
 
-  // Load lists from Supabase
+  // Load lists from Supabase + seed listes manquantes
   useEffect(() => {
     (async () => {
       const { data } = await supabase
         .from('stockage_listes')
         .select('*')
         .order('created_at', { ascending: false });
-      if (data) setLists(data);
+      if (data) {
+        const existingTitles = new Set(data.map(l => l.titre));
+        const missing = SEED_LISTS.filter(s => !existingTitles.has(s.titre));
+        if (missing.length > 0) {
+          const { data: seeded, error } = await supabase
+            .from('stockage_listes')
+            .insert(missing)
+            .select();
+          if (!error && seeded) {
+            setLists([...seeded, ...data]);
+            return;
+          }
+        }
+        setLists(data);
+      }
     })();
   }, []);
 
@@ -195,7 +295,7 @@ export default function StockageTab() {
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Nom de la liste *</label>
               <input type="text" value={listForm.titre} onChange={e => setListForm(f => ({ ...f, titre: e.target.value }))}
                 placeholder="Ex: Matériel à acheter, Contacts, Todo..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Couleur</label>
@@ -213,7 +313,7 @@ export default function StockageTab() {
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Description (optionnelle)</label>
               <input type="text" value={listForm.description} onChange={e => setListForm(f => ({ ...f, description: e.target.value }))}
                 placeholder="À quoi sert cette liste..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
             </div>
           </div>
           <div className="flex gap-2 mt-4">
@@ -286,7 +386,7 @@ export default function StockageTab() {
                       onChange={e => setNewItemText(prev => ({ ...prev, [list.id]: e.target.value }))}
                       onKeyDown={e => { if (e.key === 'Enter') addItem(list.id); }}
                       placeholder="Ajouter un élément..."
-                      className="flex-1 px-3.5 py-2 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all"
+                      className="flex-1 px-3.5 py-2 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all"
                     />
                     <button onClick={() => addItem(list.id)}
                       className="inline-flex items-center gap-1.5 px-3.5 py-2 text-sm font-semibold rounded-xl bg-gradient-to-r from-copper to-gold-light text-white hover:from-gold-light hover:to-copper transition-all cursor-pointer shadow-sm">
@@ -364,7 +464,7 @@ function ListItem({ item, listId, color, onToggle, onRemove, onEdit }) {
           onBlur={save}
           onKeyDown={e => { if (e.key === 'Enter') save(); if (e.key === 'Escape') setEditing(false); }}
           autoFocus
-          className="flex-1 px-2 py-1 rounded-lg border border-border text-sm bg-surface focus:bg-white transition-all"
+          className="flex-1 px-2 py-1 rounded-lg border border-border text-sm bg-surface focus:bg-card transition-all"
         />
       ) : (
         <span

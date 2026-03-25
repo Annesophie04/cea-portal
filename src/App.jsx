@@ -19,6 +19,7 @@ import BackgroundMusic from './components/BackgroundMusic';
 import SkipToContent from './components/SkipToContent';
 import TabPanelSkeleton from './components/TabPanelSkeleton';
 import { tabImports, prefetchTabPanel, prefetchIdlePopularTabs } from './tabImports';
+import { fireConfetti } from './utils/confetti';
 
 const MemoSection = lazy(tabImports.memo);
 const GuidePage = lazy(tabImports.procedures);
@@ -112,6 +113,7 @@ function AppInner() {
     } else {
       addDocument(formData);
       toast('Document créé', 'success');
+      fireConfetti(35);
     }
   };
   const handleDelete = (id) => {
@@ -139,9 +141,30 @@ function AppInner() {
   };
 
   const tabsRef = useRef(null);
+  const [indicatorStyle, setIndicatorStyle] = useState({ left: 0, width: 0, opacity: 0 });
   const scrollTabs = (dir) => {
     if (tabsRef.current) tabsRef.current.scrollBy({ left: dir * 200, behavior: 'smooth' });
   };
+
+  // Indicateur glissant sous l'onglet actif
+  useEffect(() => {
+    const container = tabsRef.current;
+    if (!container) return;
+    const activeBtn = container.querySelector(`#tab-${activeTab}`);
+    if (!activeBtn) return;
+    const update = () => {
+      const cRect = container.getBoundingClientRect();
+      const bRect = activeBtn.getBoundingClientRect();
+      setIndicatorStyle({
+        left: bRect.left - cRect.left + container.scrollLeft,
+        width: bRect.width,
+        opacity: 1,
+      });
+    };
+    update();
+    container.addEventListener('scroll', update, { passive: true });
+    return () => container.removeEventListener('scroll', update);
+  }, [activeTab]);
 
   /* Précharge Mémo + Vidéos (onglets fréquents) quand le navigateur est inactif */
   useEffect(() => {
@@ -160,6 +183,7 @@ function AppInner() {
         onExport={handleExport}
         onImport={handleImport}
         onAdd={openAdd}
+        documents={documents}
         onShowLanding={() => {
           sessionStorage.removeItem('cea-portal-view');
           setPortalView('landing');
@@ -171,7 +195,7 @@ function AppInner() {
       <main
         id="contenu-principal"
         tabIndex={-1}
-        className="flex-1 max-w-7xl mx-auto w-full px-3 sm:px-4 md:px-6 pt-5 sm:pt-8 pb-12 sm:pb-16 max-lg:landscape:py-3 max-lg:landscape:space-y-3 space-y-5 sm:space-y-7 safe-pb"
+        className="app-border-glow flex-1 max-w-7xl mx-auto w-full px-3 sm:px-4 md:px-6 pt-5 sm:pt-8 pb-12 sm:pb-16 max-lg:landscape:py-3 max-lg:landscape:space-y-3 space-y-5 sm:space-y-7 safe-pb"
       >
         {/* Stats */}
         <section className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 max-lg:landscape:gap-2 animate-fade-in">
@@ -185,6 +209,8 @@ function AppInner() {
           ))}
         </section>
 
+        <div className="section-divider" aria-hidden />
+
         {/* Filters */}
         <SearchFilters
           search={search} setSearch={setSearch}
@@ -194,12 +220,15 @@ function AppInner() {
           searchRef={searchRef}
         />
 
+        <div className="section-divider" aria-hidden />
+
         {/* Tabs */}
         <div className="flex items-center gap-1">
           <button type="button" onClick={() => scrollTabs(-1)} aria-label="Faire défiler les onglets vers la gauche" className="shrink-0 w-8 h-8 flex items-center justify-center rounded-xl bg-surface-alt hover:bg-copper/15 text-text-muted hover:text-copper transition-all">
             <ChevronLeft className="w-4 h-4" aria-hidden />
           </button>
-        <div ref={tabsRef} className="tabs-nav flex gap-0.5 sm:gap-1 rounded-2xl border border-border p-1 max-lg:landscape:p-0.5 overflow-x-auto max-w-full scrollbar-thin px-0.5 pb-0.5 scroll-smooth" style={{ scrollbarWidth: 'none' }} role="tablist" aria-label="Sections du portail">
+        <div ref={tabsRef} className="tabs-nav relative flex gap-0.5 sm:gap-1 rounded-2xl border border-border p-1 max-lg:landscape:p-0.5 overflow-x-auto max-w-full scrollbar-thin px-0.5 pb-0.5 scroll-smooth" style={{ scrollbarWidth: 'none' }} role="tablist" aria-label="Sections du portail">
+          <div className="tab-slide-indicator" style={indicatorStyle} aria-hidden />
           {TABS.map(tab => {
             const isActive = activeTab === tab.key;
             const badge = tabBadges[tab.key];
@@ -215,14 +244,14 @@ function AppInner() {
                 onFocus={() => prefetchTabPanel(tab.key)}
                 className={`flex items-center gap-1 sm:gap-2 px-2.5 sm:px-3.5 py-2 max-lg:landscape:px-2 max-lg:landscape:py-1.5 max-lg:landscape:text-[11px] text-[12px] sm:text-[13px] font-semibold rounded-lg sm:rounded-xl transition-all duration-250 cursor-pointer shrink-0 whitespace-nowrap min-h-[40px] max-lg:landscape:min-h-[34px] touch-manipulation snap-start ${
                   isActive
-                    ? 'bg-gradient-to-r from-[#1c1c2b] to-[#2a2a3d] text-white shadow-md shadow-black/25 ring-1 ring-white/10'
-                    : 'text-text-muted hover:bg-surface-alt hover:text-primary'
+                    ? 'bg-gradient-to-r from-copper to-gold-dark text-white shadow-md shadow-copper/30 ring-1 ring-copper/25'
+                    : 'text-text-muted hover:bg-surface-alt hover:text-copper'
                 }`}
               >
-                <tab.icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isActive ? 'text-copper-light' : 'opacity-90'}`} />
+                <tab.icon className={`w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 ${isActive ? 'text-white' : 'opacity-80'}`} />
                 {tab.label}
                 {badge != null && (
-                  <span className={`tab-badge ${isActive ? 'bg-copper-light/25 text-copper-light' : 'bg-surface-alt text-text-light'}`}>
+                  <span className={`tab-badge ${isActive ? 'bg-white/25 text-white' : 'bg-surface-alt text-text-light'}`}>
                     {badge}
                   </span>
                 )}
@@ -256,17 +285,17 @@ function AppInner() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-gradient-to-r from-[#1a1a2e] via-[#25253d] to-[#2f2f4a] text-white/60 border-t border-copper/15 safe-pb max-lg:landscape:py-2">
+      {/* Footer — clair : fond papier + texte bleu nuit ; sombre : bandeau actuel */}
+      <footer className="bg-gradient-to-r from-slate-300/70 via-[#d0d8e6] to-slate-300/70 text-text border-t border-border shadow-[0_-4px_24px_rgba(15,23,42,0.06)] safe-pb max-lg:landscape:py-2 dark:from-[#1a1a2e] dark:via-[#25253d] dark:to-[#2f2f4a] dark:text-white/70 dark:border-copper/15 dark:shadow-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-5 sm:py-6 max-lg:landscape:py-2 max-lg:landscape:gap-2 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
           <div className="flex items-center gap-3">
-            <img src={`${import.meta.env.BASE_URL}logo-san-andreas.png`} alt="" className="w-8 h-8 opacity-90" />
+            <img src={`${import.meta.env.BASE_URL}logo-san-andreas.png`} alt="" className="w-8 h-8 opacity-90 dark:opacity-90" />
             <div>
-              <p className="text-xs font-bold" style={{ color: '#fff' }}>Portail C.E.A</p>
-              <p className="text-[10px]" style={{ color: 'rgba(255,255,255,0.7)' }}>State of San Andreas — Tous droits réservés</p>
+              <p className="text-xs font-bold text-primary dark:text-white">Portail C.E.A</p>
+              <p className="text-[10px] text-text-muted dark:text-white/65">State of San Andreas — Tous droits réservés</p>
             </div>
           </div>
-          <p className="text-[10px] font-medium" style={{ color: '#d4af37' }}>Communication &bull; Événementiel &bull; Association</p>
+          <p className="text-[10px] font-medium text-copper dark:text-[#d4af37]">Communication &bull; Événementiel &bull; Association</p>
         </div>
       </footer>
 
@@ -274,6 +303,7 @@ function AppInner() {
       <BackgroundMusic />
 
       <DocumentModal
+        key={editingDoc?.id ?? 'new'}
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
         onSave={handleSave}

@@ -15,32 +15,26 @@ const emptyForm = {
 };
 
 export default function DocumentModal({ isOpen, onClose, onSave, editingDoc }) {
-  const [form, setForm] = useState(emptyForm);
+  const [form, setForm] = useState(() => {
+    if (!editingDoc) return emptyForm;
+    return {
+      title: editingDoc.title || '',
+      category: editingDoc.category || 'Fondamentaux',
+      type: editingDoc.type || 'Officiel',
+      status: editingDoc.status || 'Actif',
+      tags: (editingDoc.tags || []).join(', '),
+      link: editingDoc.link || '',
+      contact: editingDoc.contact || '',
+      description: editingDoc.description || '',
+      important: editingDoc.important || false,
+    };
+  });
   const [attemptedSubmit, setAttemptedSubmit] = useState(false);
   const dialogRef = useRef(null);
   const titleRef = useRef(null);
   const titleHeadingId = 'document-modal-title';
   const descId = useId();
   const errId = useId();
-
-  useEffect(() => {
-    if (editingDoc) {
-      setForm({
-        title: editingDoc.title || '',
-        category: editingDoc.category || 'Fondamentaux',
-        type: editingDoc.type || 'Officiel',
-        status: editingDoc.status || 'Actif',
-        tags: (editingDoc.tags || []).join(', '),
-        link: editingDoc.link || '',
-        contact: editingDoc.contact || '',
-        description: editingDoc.description || '',
-        important: editingDoc.important || false,
-      });
-    } else {
-      setForm(emptyForm);
-    }
-    setAttemptedSubmit(false);
-  }, [editingDoc, isOpen]);
 
   useEffect(() => {
     if (isOpen) titleRef.current?.focus();
@@ -74,7 +68,7 @@ export default function DocumentModal({ isOpen, onClose, onSave, editingDoc }) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-primary-dark/70 backdrop-blur-md"
+        className="absolute inset-0 bg-primary-dark/70 modal-backdrop-enter"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -85,10 +79,10 @@ export default function DocumentModal({ isOpen, onClose, onSave, editingDoc }) {
         aria-modal="true"
         aria-labelledby={titleHeadingId}
         aria-describedby={descId}
-        className="relative bg-card rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-border animate-slide-up"
+        className="relative bg-card rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-border modal-content-enter modal-gradient-border"
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-border bg-gradient-to-r from-surface to-white">
+        <div className="flex items-center justify-between p-6 border-b border-border bg-gradient-to-r from-surface to-card">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-copper to-gold-dark flex items-center justify-center shadow-md" aria-hidden>
               <FileText className="w-5 h-5 text-white" />
@@ -126,8 +120,9 @@ export default function DocumentModal({ isOpen, onClose, onSave, editingDoc }) {
               placeholder="Titre du document"
               value={form.title}
               onChange={e => set('title', e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all duration-200"
+              className="w-full px-4 py-3 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all duration-200"
               aria-invalid={showError && !form.title.trim()}
+              aria-errormessage={showError ? errId : undefined}
             />
           </div>
 
@@ -163,8 +158,9 @@ export default function DocumentModal({ isOpen, onClose, onSave, editingDoc }) {
                 placeholder="https://docs.google.com/..."
                 value={form.link}
                 onChange={e => set('link', e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all duration-200"
+                className="w-full px-4 py-3 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all duration-200"
                 aria-invalid={showError && !form.link.trim()}
+                aria-errormessage={showError ? errId : undefined}
               />
             </div>
             <div>
@@ -176,7 +172,7 @@ export default function DocumentModal({ isOpen, onClose, onSave, editingDoc }) {
                 placeholder="555-0100"
                 value={form.contact}
                 onChange={e => set('contact', e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all duration-200"
+                className="w-full px-4 py-3 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all duration-200"
               />
             </div>
           </div>
@@ -189,7 +185,7 @@ export default function DocumentModal({ isOpen, onClose, onSave, editingDoc }) {
               placeholder="procédure, guide, cea"
               value={form.tags}
               onChange={e => set('tags', e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all duration-200"
+              className="w-full px-4 py-3 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all duration-200"
             />
           </div>
 
@@ -201,7 +197,7 @@ export default function DocumentModal({ isOpen, onClose, onSave, editingDoc }) {
               placeholder="Description du document..."
               value={form.description}
               onChange={e => set('description', e.target.value)}
-              className="w-full px-4 py-3 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all duration-200 resize-y"
+              className="w-full px-4 py-3 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all duration-200 resize-y"
             />
           </div>
 

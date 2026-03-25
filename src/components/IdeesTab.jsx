@@ -77,7 +77,7 @@ export default function IdeesTab() {
             <div className="md:col-span-2">
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Titre *</label>
               <input type="text" value={form.titre} onChange={e => set('titre', e.target.value)} placeholder="Résumé de l'idée"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div>
@@ -98,7 +98,7 @@ export default function IdeesTab() {
             <div className="md:col-span-3">
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Détails</label>
               <textarea value={form.contenu} onChange={e => set('contenu', e.target.value)} rows={4} placeholder="Décris ton idée en détail..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all resize-y" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all resize-y" />
             </div>
           </div>
           <div className="flex gap-2 mt-4">

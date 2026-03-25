@@ -336,7 +336,7 @@ export default function LocationTab() {
                 type="text"
                 value={form.libelle}
                 onChange={(e) => set('libelle', e.target.value)}
-                className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-border text-base sm:text-sm bg-surface hover:bg-surface-alt focus:bg-white dark:focus:bg-white/10 transition-all"
+                className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-border text-base sm:text-sm bg-surface hover:bg-surface-alt focus:bg-card dark:focus:bg-white/10 transition-all"
               />
             </div>
             <div>
@@ -345,7 +345,7 @@ export default function LocationTab() {
                 type="text"
                 value={form.adresse}
                 onChange={(e) => set('adresse', e.target.value)}
-                className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-border text-base sm:text-sm bg-surface hover:bg-surface-alt focus:bg-white dark:focus:bg-white/10 transition-all"
+                className="w-full min-h-[44px] px-3.5 py-2.5 rounded-xl border border-border text-base sm:text-sm bg-surface hover:bg-surface-alt focus:bg-card dark:focus:bg-white/10 transition-all"
               />
             </div>
             <div>
@@ -354,7 +354,7 @@ export default function LocationTab() {
                 value={form.precisions}
                 onChange={(e) => set('precisions', e.target.value)}
                 rows={4}
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-base sm:text-sm bg-surface hover:bg-surface-alt focus:bg-white dark:focus:bg-white/10 transition-all resize-y min-h-[120px]"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-base sm:text-sm bg-surface hover:bg-surface-alt focus:bg-card dark:focus:bg-white/10 transition-all resize-y min-h-[120px]"
               />
             </div>
             <div>

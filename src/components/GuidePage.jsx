@@ -86,7 +86,7 @@ function FormField({ label, value, onChange, type = 'text', placeholder = '' }) 
         value={value}
         onChange={e => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-3 py-2 rounded-lg border border-border text-sm bg-surface focus:bg-white transition-colors"
+        className="w-full px-3 py-2 rounded-lg border border-border text-sm bg-surface focus:bg-card transition-colors"
       />
     </div>
   );
@@ -304,7 +304,7 @@ function ParticipationEvent() {
           <thead><tr className="bg-primary text-white"><th className="px-4 py-2.5 text-left font-semibold rounded-tl-lg">Montant total</th><th className="px-4 py-2.5 text-left font-semibold rounded-tr-lg">% d'aide</th></tr></thead>
           <tbody>
             {aideFinanciere.map((row, i) => (
-              <tr key={i} className={`border-t border-border ${i % 2 === 0 ? 'bg-white' : 'bg-surface/50'}`}>
+              <tr key={i} className={`border-t border-border ${i % 2 === 0 ? 'bg-card' : 'bg-surface/50'}`}>
                 <td className="px-4 py-2.5">{row.tranche}</td>
                 <td className="px-4 py-2.5 font-semibold text-primary">{row.pourcentage}</td>
               </tr>
@@ -367,7 +367,7 @@ function LocationBiens({ data }) {
           </div>
           <div>
             <label className="block text-xs font-medium text-text-muted mb-1">Description</label>
-            <textarea value={form.description || ''} onChange={e => setForm({ ...form, description: e.target.value })} rows={2} className="w-full px-3 py-2 rounded-lg border border-border text-sm bg-surface focus:bg-white transition-colors resize-y" />
+            <textarea value={form.description || ''} onChange={e => setForm({ ...form, description: e.target.value })} rows={2} className="w-full px-3 py-2 rounded-lg border border-border text-sm bg-surface focus:bg-card transition-colors resize-y" />
           </div>
           <div className="flex gap-2">
             <ActionBtn onClick={save} icon={Save} label="Enregistrer" variant="gold" />
@@ -473,7 +473,7 @@ function AssociationsActives({ data }) {
           </thead>
           <tbody>
             {items.map((asso, i) => (
-              <tr key={asso._id || i} className={`border-t border-border ${i % 2 === 0 ? 'bg-white' : 'bg-surface/50'} hover:bg-surface-alt/50 transition-colors`}>
+              <tr key={asso._id || i} className={`border-t border-border ${i % 2 === 0 ? 'bg-card' : 'bg-surface/50'} hover:bg-surface-alt/50 transition-colors`}>
                 <td className="px-4 py-3 text-text-light font-medium">{i + 1}</td>
                 <td className="px-4 py-3 font-semibold text-primary">{asso.nom}</td>
                 <td className="px-4 py-3 text-text-muted">{asso.dateCreation}</td>

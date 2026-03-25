@@ -217,7 +217,7 @@ export default function LocationsTab() {
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Nom *</label>
                   <input type="text" value={form.nom} onChange={e => set('nom', e.target.value)} placeholder="Ex: Barnum 3x3m"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Catégorie</label>
@@ -229,7 +229,7 @@ export default function LocationsTab() {
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Quantité</label>
                   <input type="number" min="1" value={form.quantite} onChange={e => set('quantite', e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">État</label>
@@ -241,12 +241,12 @@ export default function LocationsTab() {
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Prix unitaire ($)</label>
                   <input type="number" step="0.01" min="0" value={form.prix_unitaire} onChange={e => set('prix_unitaire', e.target.value)} placeholder="0.00"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Description</label>
                   <input type="text" value={form.description} onChange={e => set('description', e.target.value)} placeholder="Détails..."
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
                 </div>
               </div>
               <div className="flex gap-2 mt-4">
@@ -351,32 +351,32 @@ export default function LocationsTab() {
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Emprunteur *</label>
                   <input type="text" value={resaForm.emprunteur} onChange={e => setResa('emprunteur', e.target.value)} placeholder="Nom / Organisation"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Événement</label>
                   <input type="text" value={resaForm.evenement} onChange={e => setResa('evenement', e.target.value)} placeholder="Nom de l'événement"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Date début</label>
                   <input type="text" value={resaForm.date_debut} onChange={e => setResa('date_debut', e.target.value)} placeholder="JJ/MM/AAAA"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Date fin</label>
                   <input type="text" value={resaForm.date_fin} onChange={e => setResa('date_fin', e.target.value)} placeholder="JJ/MM/AAAA"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Quantité</label>
                   <input type="number" min="1" value={resaForm.quantite} onChange={e => setResa('quantite', e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Prix payé ($)</label>
                   <input type="number" step="0.01" min="0" value={resaForm.prix_total} onChange={e => setResa('prix_total', e.target.value)} placeholder="0.00"
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
                 </div>
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Statut</label>
@@ -388,7 +388,7 @@ export default function LocationsTab() {
                 <div>
                   <label className="block text-xs font-semibold text-text-muted mb-1.5">Notes</label>
                   <input type="text" value={resaForm.notes} onChange={e => setResa('notes', e.target.value)} placeholder="Remarques..."
-                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
+                    className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
                 </div>
               </div>
               <div className="flex gap-2 mt-4">
@@ -420,7 +420,7 @@ export default function LocationsTab() {
                   </thead>
                   <tbody>
                     {reservations.map((resa, i) => (
-                      <tr key={resa.id} className={`border-t border-border/40 hover:bg-surface-alt/50 transition-colors ${i % 2 === 0 ? 'bg-white' : 'bg-surface/30'}`}>
+                      <tr key={resa.id} className={`border-t border-border/40 hover:bg-surface-alt/50 transition-colors ${i % 2 === 0 ? 'bg-card' : 'bg-surface/30'}`}>
                         <td className="px-5 py-3 font-semibold text-primary">{resa.materiel_nom || '—'}</td>
                         <td className="px-5 py-3 text-text-muted">
                           <span className="flex items-center gap-1.5"><User className="w-3 h-3" />{resa.emprunteur}</span>

@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import { ChevronUp, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
 
 export default function ScrollToTop() {
   const [visible, setVisible] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setVisible(window.scrollY > 400);
@@ -14,35 +13,28 @@ export default function ScrollToTop() {
   if (!visible) return null;
 
   return (
-    <>
-      <div className="fixed bottom-4 right-0 z-[150] flex items-center transition-transform duration-300" style={{ transform: collapsed ? 'translateX(100%)' : 'translateX(0)' }}>
-        <button
-          type="button"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-          className="flex items-center gap-1.5 pl-3 pr-4 py-1.5 rounded-l-lg text-[10px] font-bold uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all"
-          style={{
-            background: 'linear-gradient(135deg, #b8860b, #d4af37)',
-            color: '#fff',
-            boxShadow: '0 2px 12px rgba(0,0,0,0.3)',
-          }}
-        >
-          <ChevronUp className="w-3.5 h-3.5" strokeWidth={2.5} />
-          Haut
-        </button>
-      </div>
-      {/* Toggle show/hide */}
-      <button
-        type="button"
-        onClick={() => setCollapsed(!collapsed)}
-        className="fixed bottom-4 z-[151] w-6 h-6 flex items-center justify-center rounded-l-md transition-all duration-300 hover:brightness-125"
+    <button
+      type="button"
+      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+      className="fixed bottom-6 right-6 z-[150] group"
+      aria-label="Remonter en haut"
+    >
+      {/* Halo animé */}
+      <span className="absolute inset-0 rounded-full bg-gradient-to-br from-copper/40 to-gold/30 blur-md group-hover:blur-lg opacity-60 group-hover:opacity-90 transition-all duration-500 scale-110 group-hover:scale-125" />
+
+      {/* Cercle principal */}
+      <span
+        className="relative flex items-center justify-center w-14 h-14 rounded-full shadow-2xl transition-all duration-300 group-hover:scale-110 group-hover:-translate-y-1 group-active:scale-95 overflow-hidden"
         style={{
-          right: collapsed ? 0 : '4.2rem',
-          background: 'rgba(40,40,50,0.8)',
-          color: 'rgba(255,255,255,0.5)',
+          background: 'conic-gradient(from 45deg, #b8860b, #d4af37, #e8d48b, #d4af37, #b8860b)',
+          boxShadow: '0 6px 24px rgba(184,134,11,0.4), inset 0 1px 0 rgba(255,255,255,0.3), 0 0 0 2px rgba(212,175,55,0.2)',
         }}
       >
-        {collapsed ? <ChevronLeft className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
-      </button>
-    </>
+        {/* Inner circle */}
+        <span className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0c1520] dark:bg-[#0a0a14] shadow-inner">
+          <ArrowUp className="w-5 h-5 text-gold-light group-hover:text-white transition-colors" strokeWidth={2.5} />
+        </span>
+      </span>
+    </button>
   );
 }

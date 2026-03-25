@@ -56,7 +56,7 @@ export default function MemoSection({ documents }) {
             </thead>
             <tbody>
               {importantDocs.map((doc, i) => (
-                <tr key={doc.id} className={`border-t border-border/60 hover:bg-copper/5 transition-colors ${i % 2 === 0 ? 'bg-white' : 'bg-surface/30'}`}>
+                <tr key={doc.id} className={`border-t border-border/60 hover:bg-copper/5 transition-colors ${i % 2 === 0 ? 'bg-card' : 'bg-surface/30'}`}>
                   <td className="px-5 py-4 text-text-light font-bold">{i + 1}</td>
                   <td className="px-5 py-4">
                     <p className="font-bold text-primary">{doc.title}</p>

@@ -64,10 +64,10 @@ export default function AssociationsTab() {
 
       {/* Actions */}
       <div className="flex flex-wrap gap-2">
-        <button onClick={startAdd} className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold rounded-xl bg-gradient-to-r from-copper to-gold-light text-white hover:from-gold-light hover:to-copper transition-all duration-200 cursor-pointer shadow-md shadow-copper/20 hover:-translate-y-0.5">
+        <button type="button" onClick={startAdd} className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold rounded-xl bg-gradient-to-r from-copper to-gold-light text-white hover:from-gold-light hover:to-copper transition-all duration-200 cursor-pointer shadow-md shadow-copper/20 hover:-translate-y-0.5">
           <Plus className="w-4 h-4" /> Ajouter une association
         </button>
-        <button onClick={reset} className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl border border-copper/30 text-copper hover:bg-copper/8 transition-colors cursor-pointer">
+        <button type="button" onClick={reset} className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium rounded-xl border border-copper/30 text-copper hover:bg-copper/8 transition-colors cursor-pointer">
           <RotateCcw className="w-4 h-4" /> Réinitialiser
         </button>
       </div>
@@ -94,7 +94,7 @@ export default function AssociationsTab() {
                 <input
                   type="text" value={form[f.key] || ''} onChange={e => set(f.key, e.target.value)}
                   placeholder={f.ph}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all"
                 />
               </div>
             ))}
@@ -103,7 +103,7 @@ export default function AssociationsTab() {
               <input
                 type="text" value={form.contrat || ''} onChange={e => set('contrat', e.target.value)}
                 placeholder="Statut du contrat"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all"
               />
             </div>
             <div>
@@ -111,7 +111,7 @@ export default function AssociationsTab() {
               <input
                 type="url" value={form.lienContrat || ''} onChange={e => set('lienContrat', e.target.value)}
                 placeholder="https://docs.google.com/..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all"
               />
             </div>
             <div>
@@ -127,15 +127,15 @@ export default function AssociationsTab() {
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Notes</label>
               <textarea value={form.notes || ''} onChange={e => set('notes', e.target.value)} rows={2}
                 placeholder="Notes internes..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all resize-y"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all resize-y"
               />
             </div>
           </div>
           <div className="flex gap-2 mt-4">
-            <button onClick={save} className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-xl bg-gradient-to-r from-copper to-gold-light text-white hover:from-gold-light hover:to-copper transition-all cursor-pointer shadow-md">
+            <button type="button" onClick={save} className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-xl bg-gradient-to-r from-copper to-gold-light text-white hover:from-gold-light hover:to-copper transition-all cursor-pointer shadow-md">
               <Save className="w-4 h-4" /> Enregistrer
             </button>
-            <button onClick={cancel} className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium rounded-xl border border-border text-text-muted hover:bg-surface-alt transition-colors cursor-pointer">
+            <button type="button" onClick={cancel} className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium rounded-xl border border-border text-text-muted hover:bg-surface-alt transition-colors cursor-pointer">
               <X className="w-4 h-4" /> Annuler
             </button>
           </div>
@@ -230,12 +230,14 @@ export default function AssociationsTab() {
               {/* Actions */}
               <div className="flex gap-2 mt-4 pt-3 border-t border-border/40">
                 <button
+                  type="button"
                   onClick={(e) => { e.stopPropagation(); startEdit(asso); }}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-border text-text-muted hover:bg-surface-alt hover:border-primary/20 transition-all cursor-pointer"
                 >
                   <Pencil className="w-3 h-3" /> Modifier
                 </button>
                 <button
+                  type="button"
                   onClick={(e) => { e.stopPropagation(); if (window.confirm(`Supprimer « ${asso.nom} » ?`)) remove(asso.id); }}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-danger/20 text-danger hover:bg-red-50 hover:border-danger/40 transition-all cursor-pointer"
                 >
