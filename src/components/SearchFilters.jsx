@@ -61,7 +61,7 @@ export default function SearchFilters({
             value={search}
             onChange={e => setSearch(e.target.value)}
             aria-label="Rechercher dans les documents"
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border text-sm text-text bg-surface hover:bg-surface-alt focus:bg-card dark:focus:bg-white/10 transition-all duration-200 placeholder:text-text-light/70"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-border text-sm text-text bg-surface hover:bg-surface-alt focus:bg-white dark:focus:bg-white/10 transition-all duration-200 placeholder:text-text-light/70"
           />
           {search && (
             <button

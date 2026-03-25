@@ -103,7 +103,7 @@ function VideoThumbnail({ video }) {
             'repeating-linear-gradient(-12deg, transparent, transparent 8px, rgba(184,134,11,0.08) 8px, rgba(184,134,11,0.08) 9px)',
         }}
       />
-      <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-copper/25 bg-card/90 shadow-sm dark:border-white/10 dark:bg-white/5 dark:shadow-none">
+      <div className="relative flex h-14 w-14 items-center justify-center rounded-2xl border border-copper/25 bg-white/80 shadow-sm dark:border-white/10 dark:bg-white/5 dark:shadow-none">
         <Film className="h-7 w-7 text-copper dark:text-copper-light/80" />
       </div>
       <p className="relative text-[10px] font-bold uppercase tracking-wider text-primary/70 dark:text-white/45">Aperçu</p>
@@ -428,7 +428,7 @@ export default function VideosTab() {
                   <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/65 via-black/10 to-transparent opacity-90" />
 
                   <div className="absolute inset-0 flex items-center justify-center bg-black/0 transition-colors duration-300 group-hover/card:bg-black/25">
-                    <div className="flex h-12 w-12 scale-90 items-center justify-center rounded-full bg-white/0 opacity-0 shadow-lg transition-all duration-300 group-hover/card:scale-100 group-hover/card:bg-card group-hover/card:opacity-100">
+                    <div className="flex h-12 w-12 scale-90 items-center justify-center rounded-full bg-white/0 opacity-0 shadow-lg transition-all duration-300 group-hover/card:scale-100 group-hover/card:bg-white group-hover/card:opacity-100">
                       <Play className="ml-0.5 h-6 w-6 text-[#0f1b28]" />
                     </div>
                   </div>

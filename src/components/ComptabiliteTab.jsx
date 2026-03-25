@@ -109,11 +109,11 @@ export default function ComptabiliteTab() {
     setShowForm(true);
   };
 
-  const cancelForm = useCallback(() => {
+  const cancelForm = () => {
     setShowForm(false);
     setForm(emptyForm);
     setEditingId(null);
-  }, []);
+  };
 
   const saveItem = useCallback(async () => {
     if (!form.libelle?.trim() || !form.montant) return;
@@ -151,7 +151,7 @@ export default function ComptabiliteTab() {
         cancelForm();
       }
     }
-  }, [form, weekStart, editingId, cancelForm]);
+  }, [form, weekStart, editingId]);
 
   const removeItem = useCallback(async (id) => {
     const { error } = await supabase.from('comptabilite').delete().eq('id', id);
@@ -246,12 +246,12 @@ export default function ComptabiliteTab() {
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Libellé *</label>
               <input type="text" value={form.libelle} onChange={e => set('libelle', e.target.value)} placeholder="Description de l'opération"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Montant ($) *</label>
               <input type="number" step="0.01" min="0" value={form.montant} onChange={e => set('montant', e.target.value)} placeholder="0.00"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Type</label>
@@ -271,12 +271,12 @@ export default function ComptabiliteTab() {
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Date</label>
               <input type="text" value={form.date} onChange={e => set('date', e.target.value)} placeholder="JJ/MM/AAAA"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Notes</label>
               <input type="text" value={form.notes} onChange={e => set('notes', e.target.value)} placeholder="Notes optionnelles..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
             </div>
           </div>
           <div className="flex gap-2 mt-4">
@@ -308,7 +308,7 @@ export default function ComptabiliteTab() {
               </thead>
               <tbody>
                 {filtered.map((item, i) => (
-                  <tr key={item.id} className={`border-t border-border/40 hover:bg-surface-alt/50 transition-colors ${i % 2 === 0 ? 'bg-card' : 'bg-surface/30'}`}>
+                  <tr key={item.id} className={`border-t border-border/40 hover:bg-surface-alt/50 transition-colors ${i % 2 === 0 ? 'bg-white' : 'bg-surface/30'}`}>
                     <td className="px-5 py-3 text-text-light font-mono text-xs">{i + 1}</td>
                     <td className="px-5 py-3 text-text-muted text-xs">{item.date || item.date_ajout}</td>
                     <td className="px-5 py-3 font-semibold text-primary">
@@ -400,7 +400,7 @@ export default function ComptabiliteTab() {
                       </thead>
                       <tbody>
                         {archiveItems.map((item, i) => (
-                          <tr key={item.id || i} className={`border-t border-border/30 ${i % 2 === 0 ? 'bg-card' : 'bg-surface/20'}`}>
+                          <tr key={item.id || i} className={`border-t border-border/30 ${i % 2 === 0 ? 'bg-white' : 'bg-surface/20'}`}>
                             <td className="px-5 py-2.5 text-text-light font-mono text-xs">{i + 1}</td>
                             <td className="px-5 py-2.5 text-text-muted text-xs">{item.date || item.date_ajout}</td>
                             <td className="px-5 py-2.5 font-semibold text-primary text-xs">

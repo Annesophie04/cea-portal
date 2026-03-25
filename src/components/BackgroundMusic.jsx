@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Volume2, VolumeX, Music, Upload, Trash2, Play } from 'lucide-react';
+import { Volume2, VolumeX, ChevronRight, ChevronLeft, Music, Upload, Trash2, Play } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 const VOLUME = 0.01;
@@ -9,7 +9,7 @@ const DEFAULT_SRC = `${import.meta.env.BASE_URL || '/'}bg-music.mp3`;
 export default function BackgroundMusic() {
   const audioRef = useRef(null);
   const [playing, setPlaying] = useState(false);
-  /* collapsed supprimé — design flottant sans toggle */
+  const [collapsed, setCollapsed] = useState(false);
   const [showPanel, setShowPanel] = useState(false);
   const [tracks, setTracks] = useState([]);
   const [currentSrc, setCurrentSrc] = useState(DEFAULT_SRC);
@@ -166,90 +166,57 @@ export default function BackgroundMusic() {
     <>
       <audio ref={audioRef} src={currentSrc} loop preload="auto" />
 
-      {/* Bouton musique — disque vinyle flottant */}
-      <div className="fixed bottom-6 left-6 z-[150] flex flex-col items-center gap-2 max-lg:landscape:bottom-auto max-lg:landscape:top-[calc(env(safe-area-inset-top)+0.65rem)] max-lg:landscape:left-3">
-        {/* Bouton playlist (petit, au-dessus) */}
-        <button
-          type="button"
-          onClick={() => setShowPanel(!showPanel)}
-          className="group relative w-9 h-9 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 active:scale-95"
-          style={{
-            background: showPanel ? 'linear-gradient(135deg, #b8860b, #d4af37)' : 'linear-gradient(135deg, rgba(28,28,40,0.95), rgba(40,40,55,0.95))',
-            boxShadow: showPanel ? '0 4px 16px rgba(184,134,11,0.3)' : '0 4px 12px rgba(0,0,0,0.4)',
-            border: '2px solid ' + (showPanel ? 'rgba(212,175,55,0.4)' : 'rgba(255,255,255,0.08)'),
-          }}
-          title="Playlist"
-        >
-          <Music className="w-4 h-4" style={{ color: showPanel ? '#fff' : 'rgba(212,175,55,0.6)' }} />
-        </button>
-
-        {/* Bouton principal — vinyle */}
-        <button
-          type="button"
-          onClick={toggle}
-          className="group relative"
-          title={playing ? 'Couper le son' : 'Activer le son'}
-        >
-          {/* Halo */}
-          <span
-            className="absolute inset-0 rounded-full blur-md transition-all duration-500"
+      {/* Bouton principal */}
+      <div
+        className="fixed bottom-4 left-0 z-[150] flex items-center transition-transform duration-300 max-lg:landscape:bottom-auto max-lg:landscape:top-[calc(env(safe-area-inset-top)+0.65rem)]"
+        style={{ transform: collapsed ? 'translateX(-100%)' : 'translateX(0)' }}
+      >
+        <div className="flex flex-col rounded-r-lg overflow-hidden" style={{ boxShadow: '0 2px 12px rgba(0,0,0,0.3)' }}>
+          <button
+            type="button"
+            onClick={toggle}
+            className="flex items-center gap-1.5 pl-4 pr-3 py-1.5 text-[10px] font-bold uppercase tracking-wider hover:brightness-110 active:scale-95 transition-all min-h-[36px]"
             style={{
-              background: playing ? 'rgba(184,134,11,0.35)' : 'rgba(0,0,0,0.2)',
-              transform: 'scale(1.3)',
-              opacity: playing ? 0.8 : 0.4,
-            }}
-          />
-
-          {/* Disque extérieur */}
-          <span
-            className="relative flex items-center justify-center w-14 h-14 rounded-full transition-all duration-300 group-hover:scale-110 group-active:scale-95 overflow-hidden"
-            style={{
-              background: playing
-                ? 'conic-gradient(from 0deg, #1a1a2e, #2a2a3d, #1a1a2e, #2a2a3d, #1a1a2e)'
-                : 'linear-gradient(135deg, rgba(28,28,40,0.95), rgba(40,40,55,0.95))',
-              boxShadow: playing
-                ? '0 6px 24px rgba(184,134,11,0.3), inset 0 0 0 2px rgba(212,175,55,0.2), 0 0 0 2px rgba(212,175,55,0.15)'
-                : '0 4px 16px rgba(0,0,0,0.5), inset 0 0 0 2px rgba(255,255,255,0.05), 0 0 0 2px rgba(255,255,255,0.03)',
-              animation: playing ? 'slowSpin 8s linear infinite' : 'none',
+              background: playing ? 'linear-gradient(135deg, #b8860b, #d4af37)' : 'rgba(40,40,50,0.9)',
+              color: playing ? '#fff' : 'rgba(255,255,255,0.5)',
             }}
           >
-            {/* Sillons du vinyle */}
-            <span
-              className="absolute inset-[6px] rounded-full"
-              style={{
-                background: 'repeating-radial-gradient(circle at center, transparent 0px, transparent 2px, rgba(255,255,255,0.04) 2.5px, transparent 3px)',
-              }}
-            />
-
-            {/* Centre — label doré */}
-            <span
-              className="relative flex items-center justify-center w-8 h-8 rounded-full transition-colors duration-300"
-              style={{
-                background: playing
-                  ? 'radial-gradient(circle, #d4af37 0%, #b8860b 70%, #8a6508 100%)'
-                  : 'radial-gradient(circle, rgba(60,60,75,1) 0%, rgba(40,40,55,1) 100%)',
-                boxShadow: playing ? 'inset 0 1px 2px rgba(255,255,255,0.3)' : 'inset 0 1px 2px rgba(255,255,255,0.05)',
-              }}
-            >
-              {playing
-                ? <Volume2 className="w-4 h-4 text-white drop-shadow-sm" />
-                : <VolumeX className="w-4 h-4" style={{ color: 'rgba(212,175,55,0.5)' }} />
-              }
-            </span>
-          </span>
-        </button>
-
-        {/* Label piste en cours */}
-        {playing && (
-          <span className="text-[8px] font-bold text-copper-light/70 uppercase tracking-widest max-w-[80px] truncate text-center">
-            {currentName}
-          </span>
-        )}
+            {playing ? <Volume2 className="w-3.5 h-3.5" /> : <VolumeX className="w-3.5 h-3.5" />}
+            {playing ? 'Son' : 'Muet'}
+          </button>
+          <button
+            type="button"
+            onClick={() => setShowPanel(!showPanel)}
+            className="flex items-center gap-1.5 pl-4 pr-3 py-1 text-[9px] font-bold uppercase tracking-wider hover:brightness-110 transition-all min-h-[30px]"
+            style={{
+              background: 'rgba(40,40,50,0.85)',
+              color: 'rgba(255,255,255,0.4)',
+              borderTop: '1px solid rgba(255,255,255,0.08)',
+            }}
+          >
+            <Music className="w-3 h-3" />
+            Pistes
+          </button>
+        </div>
       </div>
+
+      {/* Toggle collapse */}
+      <button
+        type="button"
+        onClick={() => setCollapsed(!collapsed)}
+        className="fixed bottom-4 max-lg:landscape:bottom-auto max-lg:landscape:top-[calc(env(safe-area-inset-top)+0.65rem)] z-[151] w-6 h-6 flex items-center justify-center rounded-r-md transition-all duration-300 hover:brightness-125"
+        style={{
+          left: collapsed ? 0 : '4.5rem',
+          background: 'rgba(40,40,50,0.8)',
+          color: 'rgba(255,255,255,0.5)',
+        }}
+      >
+        {collapsed ? <ChevronRight className="w-3 h-3" /> : <ChevronLeft className="w-3 h-3" />}
+      </button>
 
       {/* Panel de gestion des pistes */}
       {showPanel && (
-        <div className="fixed bottom-28 left-6 z-[160] w-72 max-w-[calc(100vw-1.5rem)] bg-card border border-border rounded-2xl shadow-2xl animate-slide-up overflow-hidden max-lg:landscape:bottom-auto max-lg:landscape:top-[calc(env(safe-area-inset-top)+3.5rem)] max-lg:landscape:left-2">
+        <div className="fixed bottom-16 left-4 z-[160] w-72 max-w-[calc(100vw-1.5rem)] bg-card border border-border rounded-2xl shadow-2xl animate-slide-up overflow-hidden max-lg:landscape:bottom-auto max-lg:landscape:top-[calc(env(safe-area-inset-top)+3.5rem)] max-lg:landscape:left-2">
           <div className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-[#1c1c2b] to-[#2a2a3d]">
             <p className="text-xs font-bold text-white flex items-center gap-2">
               <Music className="w-4 h-4 text-copper-light" /> Playlist

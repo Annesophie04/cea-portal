@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react';
 import {
-  Image, Plus, Trash2, Save, X, ExternalLink, Maximize2, Eye, Upload, Loader,
+  Image, Plus, Trash2, Save, X, ExternalLink, Maximize2, Eye, Upload, Link2, Loader, Monitor,
 } from 'lucide-react';
 import { useSupabaseData } from '../hooks/useSupabaseData';
 import { useToast } from './Toast';
@@ -34,6 +34,8 @@ export default function AffichesTab() {
   const [showForm, setShowForm] = useState(false);
   const [form, setForm] = useState(emptyForm);
   const [previewId, setPreviewId] = useState(null);
+  /** 'link' = URL (Discord, etc.) ; 'file' = image depuis le PC */
+  const [imageSource, setImageSource] = useState('link');
   const [uploading, setUploading] = useState(false);
   const fileRef = useRef(null);
 
@@ -72,6 +74,7 @@ export default function AffichesTab() {
     }
     setForm(emptyForm);
     setShowForm(false);
+    setImageSource('link');
     toast('Affiche enregistrée.', 'success');
   };
 
@@ -101,8 +104,40 @@ export default function AffichesTab() {
             <Image className="w-5 h-5 text-copper" /> Nouvelle affiche
           </h3>
 
+          <p className="text-xs text-text-muted mb-4">
+            Choisis une <strong className="text-primary">image sur ton PC</strong> (envoi vers le cloud) ou colle un{' '}
+            <strong className="text-primary">lien direct</strong> (Discord, Imgur, lien qui se termine en .png / .jpg…).
+          </p>
+
+          <div className="flex flex-wrap gap-2 mb-4">
+            <button
+              type="button"
+              onClick={() => setImageSource('file')}
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold border transition-all ${
+                imageSource === 'file'
+                  ? 'bg-copper/15 border-copper text-copper'
+                  : 'border-border text-text-muted hover:bg-surface-alt'
+              }`}
+            >
+              <Monitor className="w-4 h-4" />
+              Fichier (PC)
+            </button>
+            <button
+              type="button"
+              onClick={() => setImageSource('link')}
+              className={`inline-flex items-center gap-2 px-3 py-2 rounded-xl text-sm font-semibold border transition-all ${
+                imageSource === 'link'
+                  ? 'bg-copper/15 border-copper text-copper'
+                  : 'border-border text-text-muted hover:bg-surface-alt'
+              }`}
+            >
+              <Link2 className="w-4 h-4" />
+              Lien (Discord, web)
+            </button>
+          </div>
+
           <div className="grid md:grid-cols-2 gap-4">
-            <div className="md:col-span-2">
+            <div>
               <label htmlFor="affiche-titre" className="block text-xs font-semibold text-text-muted mb-1.5">
                 Titre *
               </label>
@@ -112,43 +147,39 @@ export default function AffichesTab() {
                 value={form.titre}
                 onChange={(e) => set('titre', e.target.value)}
                 placeholder="Nom de l'affiche"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all"
               />
             </div>
 
-            <div className="md:col-span-2 rounded-2xl border-2 border-copper/25 bg-surface-alt/50 dark:bg-white/[0.03] p-4 space-y-4">
-              <p className="text-sm font-bold text-primary">Image de l’affiche *</p>
-              <input ref={fileRef} type="file" accept="image/*" className="sr-only" onChange={handleFile} />
-              <button
-                type="button"
-                disabled={uploading}
-                onClick={() => fileRef.current?.click()}
-                className="w-full sm:w-auto min-h-[3rem] inline-flex items-center justify-center gap-2.5 px-6 py-3 text-sm font-bold rounded-xl bg-gradient-to-r from-copper to-gold-light text-white shadow-md shadow-copper/25 hover:from-gold-light hover:to-copper hover:-translate-y-0.5 transition-all disabled:opacity-60 disabled:hover:translate-y-0 cursor-pointer"
-              >
-                {uploading ? (
-                  <>
-                    <Loader className="w-5 h-5 animate-spin" /> Envoi en cours…
-                  </>
-                ) : (
-                  <>
-                    <Upload className="w-5 h-5" />
-                    Importer depuis mon ordinateur
-                  </>
+            {imageSource === 'file' ? (
+              <div>
+                <span className="block text-xs font-semibold text-text-muted mb-1.5">Image depuis ton ordinateur *</span>
+                <input ref={fileRef} type="file" accept="image/*" className="sr-only" onChange={handleFile} />
+                <button
+                  type="button"
+                  disabled={uploading}
+                  onClick={() => fileRef.current?.click()}
+                  className="w-full inline-flex items-center justify-center gap-2 px-3.5 py-2.5 rounded-xl border-2 border-dashed border-copper/40 text-sm font-semibold text-copper hover:bg-copper/10 transition-all disabled:opacity-60"
+                >
+                  {uploading ? (
+                    <>
+                      <Loader className="w-4 h-4 animate-spin" /> Envoi en cours…
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-4 h-4" />
+                      {form.imageUrl ? 'Changer l’image' : 'Choisir une image'}
+                    </>
+                  )}
+                </button>
+                {form.imageUrl && imageSource === 'file' && (
+                  <p className="text-[11px] text-success mt-1.5">Image prête (URL serveur).</p>
                 )}
-              </button>
-              <p className="text-xs text-text-muted">
-                Le fichier est envoyé sur le cloud Supabase ; l’aperçu apparaît ci-dessous une fois prêt.
-              </p>
-
-              <div className="flex items-center gap-3 py-1">
-                <div className="h-px flex-1 bg-border" aria-hidden />
-                <span className="text-[11px] font-semibold uppercase tracking-wider text-text-light">ou</span>
-                <div className="h-px flex-1 bg-border" aria-hidden />
               </div>
-
+            ) : (
               <div>
                 <label htmlFor="affiche-url" className="block text-xs font-semibold text-text-muted mb-1.5">
-                  Lien direct vers l’image (Discord, Imgur, etc.)
+                  URL de l’image *
                 </label>
                 <input
                   id="affiche-url"
@@ -159,14 +190,15 @@ export default function AffichesTab() {
                   value={form.imageUrl}
                   onChange={(e) => set('imageUrl', e.target.value)}
                   placeholder="https://cdn.discordapp.com/attachments/…/image.png"
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all font-mono text-[13px]"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all font-mono text-[13px]"
                 />
                 <p className="text-[11px] text-text-light mt-1.5 leading-relaxed">
-                  <strong className="text-text-muted">Discord :</strong> ouvre l’image en grand → clic droit → « Copier
-                  l’adresse du lien » (URL se terminant par .png / .jpg / .webp).
+                  <strong className="text-text-muted">Discord :</strong> ouvre l’image en grand, clic droit → « Copier
+                  l’adresse du lien » (pas le lien du message seul). Le lien doit pointer vers un fichier image (.png,
+                  .jpg, .webp).
                 </p>
               </div>
-            </div>
+            )}
 
             <div>
               <label htmlFor="affiche-event" className="block text-xs font-semibold text-text-muted mb-1.5">
@@ -178,7 +210,7 @@ export default function AffichesTab() {
                 value={form.evenement}
                 onChange={(e) => set('evenement', e.target.value)}
                 placeholder="Nom de l'événement"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all"
               />
             </div>
             <div>
@@ -191,7 +223,7 @@ export default function AffichesTab() {
                 value={form.auteur}
                 onChange={(e) => set('auteur', e.target.value)}
                 placeholder="Qui a fait l'affiche"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all"
               />
             </div>
             <div className="md:col-span-2">
@@ -204,7 +236,7 @@ export default function AffichesTab() {
                 value={form.description}
                 onChange={(e) => set('description', e.target.value)}
                 placeholder="Description courte..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all"
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all"
               />
             </div>
           </div>
@@ -237,6 +269,7 @@ export default function AffichesTab() {
               onClick={() => {
                 setShowForm(false);
                 setForm(emptyForm);
+                setImageSource('link');
               }}
               className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium rounded-xl border border-border text-text-muted hover:bg-surface-alt transition-colors cursor-pointer"
             >
@@ -295,7 +328,7 @@ export default function AffichesTab() {
               />
               <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
                 <div className="opacity-0 group-hover:opacity-100 transition-opacity flex gap-2">
-                  <div className="w-10 h-10 rounded-full bg-card/95 flex items-center justify-center shadow-lg">
+                  <div className="w-10 h-10 rounded-full bg-white/90 flex items-center justify-center shadow-lg">
                     <Maximize2 className="w-5 h-5 text-primary" />
                   </div>
                 </div>

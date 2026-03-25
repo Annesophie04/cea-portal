@@ -29,11 +29,10 @@ function formatDate(raw) {
 
 export default function DocumentCard({ doc, onEdit, onDelete }) {
   return (
-    <div className={`bg-card rounded-2xl border shadow-sm doc-card-3d group overflow-hidden relative ${doc.important ? 'border-copper/40 ring-2 ring-copper/15' : 'border-border'}`}>
-      <div className={`doc-type-strip ${TYPE_COLORS[doc.type]?.includes('copper') ? 'bg-gradient-to-b from-copper to-gold-light' : TYPE_COLORS[doc.type]?.includes('2d7a4f') ? 'bg-gradient-to-b from-[#2d7a4f] to-[#3d9963]' : TYPE_COLORS[doc.type]?.includes('4a3f5c') ? 'bg-gradient-to-b from-[#4a3f5c] to-[#6b5d85]' : TYPE_COLORS[doc.type]?.includes('6b6575') ? 'bg-gradient-to-b from-[#6b6575] to-[#8a8494]' : 'bg-gradient-to-b from-[#1c1c2b] to-[#2a2a3d]'}`} />
+    <div className={`bg-card rounded-2xl border shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group overflow-hidden ${doc.important ? 'border-copper/40 ring-2 ring-copper/15' : 'border-border'}`}>
       {doc.important && <div className="h-0.5 gold-shimmer" />}
 
-      <div className="p-5 pb-3 pl-6">
+      <div className="p-5 pb-3">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0 flex-1">
             <h3 className="text-base font-bold text-primary leading-snug flex items-center gap-2">
@@ -53,7 +52,7 @@ export default function DocumentCard({ doc, onEdit, onDelete }) {
         </div>
       </div>
 
-      <div className="px-5 pb-5 pl-6 space-y-3.5">
+      <div className="px-5 pb-5 space-y-3.5">
         <p className="text-sm text-text-muted line-clamp-2 min-h-[2.5rem] leading-relaxed">
           {doc.description || 'Aucune description.'}
         </p>

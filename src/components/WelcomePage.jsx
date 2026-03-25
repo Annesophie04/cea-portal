@@ -42,14 +42,10 @@ export default function WelcomePage({ onEnter }) {
   const { dark, toggle } = useTheme();
   const [scrolled, setScrolled] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [parallax, setParallax] = useState(0);
 
   useEffect(() => {
     setVisible(true);
-    const onScroll = () => {
-      setScrolled(window.scrollY > 48);
-      setParallax(window.scrollY * 0.15);
-    };
+    const onScroll = () => setScrolled(window.scrollY > 48);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -123,8 +119,7 @@ export default function WelcomePage({ onEnter }) {
                 <img
                   src={`${import.meta.env.BASE_URL}logo-san-andreas.png`}
                   alt="State of San Andreas"
-                  className="parallax-logo relative w-[4.5rem] h-[4.5rem] md:w-28 md:h-28 max-lg:landscape:w-14 max-lg:landscape:h-14 object-contain drop-shadow-2xl"
-                  style={{ transform: `translateY(${parallax}px)` }}
+                  className="relative w-[4.5rem] h-[4.5rem] md:w-28 md:h-28 max-lg:landscape:w-14 max-lg:landscape:h-14 object-contain drop-shadow-2xl"
                 />
               </div>
               <div className="h-12 md:h-20 max-lg:landscape:h-10 w-px bg-gradient-to-b from-transparent via-copper/40 to-transparent" />
@@ -133,15 +128,14 @@ export default function WelcomePage({ onEnter }) {
                 <img
                   src={`${import.meta.env.BASE_URL}logo-cea.png`}
                   alt="C.E.A"
-                  className="parallax-logo relative w-[4.5rem] h-[4.5rem] md:w-28 md:h-28 max-lg:landscape:w-14 max-lg:landscape:h-14 object-contain drop-shadow-2xl"
-                  style={{ transform: `translateY(${parallax * 0.7}px)` }}
+                  className="relative w-[4.5rem] h-[4.5rem] md:w-28 md:h-28 max-lg:landscape:w-14 max-lg:landscape:h-14 object-contain drop-shadow-2xl"
                 />
               </div>
             </div>
 
             <h1 className="text-[2.75rem] sm:text-5xl md:text-6xl lg:text-7xl max-lg:landscape:text-3xl font-extrabold text-primary tracking-tight leading-[1.05] max-lg:landscape:leading-tight">
               Portail
-              <span className="block mt-1 md:mt-2 max-lg:landscape:mt-0 welcome-title-shimmer pb-1">
+              <span className="block mt-1 md:mt-2 max-lg:landscape:mt-0 bg-gradient-to-r from-copper via-gold to-copper-light bg-clip-text text-transparent pb-1">
                 C.E.A
               </span>
             </h1>
@@ -153,12 +147,12 @@ export default function WelcomePage({ onEnter }) {
 
             <div className="mt-8 md:mt-10 max-lg:landscape:mt-4 inline-flex flex-wrap items-center justify-center gap-4 md:gap-10 max-lg:landscape:gap-3 px-4 sm:px-6 py-3 max-lg:landscape:py-2 rounded-2xl welcome-stat-strip">
               {STATS.map((stat) => (
-                <div key={stat.label} className="flex items-center gap-3 text-left group">
-                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-copper/20 to-gold/10 border border-copper/20 flex items-center justify-center group-hover:scale-110 group-hover:from-copper/30 group-hover:to-gold/20 transition-all duration-300">
+                <div key={stat.label} className="flex items-center gap-3 text-left">
+                  <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-copper/20 to-gold/10 border border-copper/20 flex items-center justify-center">
                     <stat.icon className="w-5 h-5 text-copper" />
                   </div>
                   <div>
-                    <p className="text-xl md:text-2xl font-extrabold text-primary tabular-nums leading-none stat-value-glow">{stat.value}</p>
+                    <p className="text-xl md:text-2xl font-extrabold text-primary tabular-nums leading-none">{stat.value}</p>
                     <p className="text-[10px] md:text-xs text-text-muted font-semibold uppercase tracking-wider mt-1">{stat.label}</p>
                   </div>
                 </div>
@@ -169,7 +163,7 @@ export default function WelcomePage({ onEnter }) {
               <button
                 type="button"
                 onClick={onEnter}
-                className="cta-glow group inline-flex items-center justify-center gap-3 min-h-[3rem] max-lg:landscape:min-h-[2.75rem] sm:min-h-[3.5rem] px-8 md:px-12 max-lg:landscape:px-6 text-sm md:text-lg max-lg:landscape:text-sm font-bold rounded-2xl bg-gradient-to-r from-copper to-gold-light text-white shadow-xl shadow-copper/30 hover:shadow-copper/50 hover:-translate-y-1 active:translate-y-0 transition-all cursor-pointer w-full sm:w-auto"
+                className="group inline-flex items-center justify-center gap-3 min-h-[3rem] max-lg:landscape:min-h-[2.75rem] sm:min-h-[3.5rem] px-8 md:px-12 max-lg:landscape:px-6 text-sm md:text-lg max-lg:landscape:text-sm font-bold rounded-2xl bg-gradient-to-r from-copper to-gold-light text-white shadow-xl shadow-copper/30 hover:shadow-copper/50 hover:-translate-y-1 active:translate-y-0 transition-all cursor-pointer w-full sm:w-auto"
               >
                 Accéder au portail
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
@@ -205,7 +199,7 @@ export default function WelcomePage({ onEnter }) {
               </p>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5" style={{ counterReset: 'feature-counter' }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-5">
               {FEATURES.map((feature, i) => {
                 const Icon = feature.icon;
                 const grad = ICON_GRADIENTS[i % ICON_GRADIENTS.length];
@@ -213,10 +207,10 @@ export default function WelcomePage({ onEnter }) {
                   <div
                     key={feature.title}
                     style={{ animationDelay: `${i * 45}ms` }}
-                    className="welcome-card feature-card-numbered card-inner-light rounded-2xl border border-border bg-card/95 p-6 text-left animate-fade-in"
+                    className="welcome-card rounded-2xl border border-border bg-card/95 p-6 text-left animate-fade-in"
                   >
                     <div
-                      className={`w-12 h-12 rounded-xl bg-gradient-to-br ${grad} flex items-center justify-center mb-4 shadow-lg ring-1 ring-white/10 group-hover:shadow-xl transition-shadow`}
+                      className={`w-12 h-12 rounded-xl bg-gradient-to-br ${grad} flex items-center justify-center mb-4 shadow-lg ring-1 ring-white/10`}
                     >
                       <Icon className="w-6 h-6 text-white drop-shadow-sm" />
                     </div>
@@ -233,28 +227,27 @@ export default function WelcomePage({ onEnter }) {
         <section className="relative px-4 pb-20 md:pb-28">
           <div className="max-w-4xl mx-auto">
             <div
-              className="welcome-cta-final relative overflow-hidden rounded-3xl p-10 md:p-14 text-center border border-border/70 dark:border-white/10 bg-[linear-gradient(135deg,#c8d2de_0%,#d4dce8_50%,#cad4e2_100%)] dark:bg-[linear-gradient(135deg,#0d1117_0%,#161b22_40%,#1c2128_70%,#0d1117_100%)]"
+              className="welcome-cta-final relative overflow-hidden rounded-3xl p-10 md:p-14 text-center border border-white/10"
+              style={{ background: 'linear-gradient(135deg, #0d1117 0%, #161b22 40%, #1c2128 70%, #0d1117 100%)' }}
             >
               <div className="absolute inset-0 opacity-30 pointer-events-none">
-                <div className="absolute top-0 left-1/4 w-80 h-80 bg-copper/12 dark:bg-copper/20 rounded-full blur-3xl" />
-                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-primary/8 dark:bg-blue-600/8 rounded-full blur-3xl" />
+                <div className="absolute top-0 left-1/4 w-80 h-80 bg-copper/20 rounded-full blur-3xl" />
+                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-blue-600/8 rounded-full blur-3xl" />
               </div>
-              <div className="relative z-[10000] bg-card/95 backdrop-blur-md dark:bg-black/70 rounded-2xl px-8 py-10 md:px-12 md:py-12 border border-border/50 dark:border-transparent shadow-sm dark:shadow-none">
+              <div className="relative z-[10000] bg-black/70 backdrop-blur-md rounded-2xl px-8 py-10 md:px-12 md:py-12">
                 <div className="flex items-center justify-center gap-5 mb-8">
                   <img src={`${import.meta.env.BASE_URL}logo-san-andreas.png`} alt="" className="h-11 md:h-12 w-auto opacity-95" />
-                  <span className="text-text-muted/40 dark:text-white/25 text-3xl font-extralight select-none">×</span>
+                  <span className="text-white/25 text-3xl font-extralight select-none">×</span>
                   <img src={`${import.meta.env.BASE_URL}logo-cea.png`} alt="" className="h-11 md:h-12 w-auto opacity-95" />
                 </div>
-                <h2 className="text-2xl md:text-3xl font-extrabold mb-3 text-primary dark:text-[#f5f0e8] dark:[text-shadow:0_2px_12px_rgba(0,0,0,0.9)]">
-                  Prêt à commencer ?
-                </h2>
-                <p className="text-sm md:text-base max-w-md mx-auto mb-10 leading-relaxed text-text-muted dark:text-[#e8e0d4] dark:[text-shadow:0_1px_8px_rgba(0,0,0,0.8)]">
+                <h2 className="text-2xl md:text-3xl font-extrabold mb-3" style={{ color: '#f5f0e8', textShadow: '0 2px 12px rgba(0,0,0,0.9)' }}>Prêt à commencer ?</h2>
+                <p className="text-sm md:text-base max-w-md mx-auto mb-10 leading-relaxed" style={{ color: '#e8e0d4', textShadow: '0 1px 8px rgba(0,0,0,0.8)' }}>
                   Accédez à l’ensemble des outils du pôle Communication, Événementiel et Association.
                 </p>
                 <button
                   type="button"
                   onClick={onEnter}
-                  className="cta-glow group inline-flex items-center gap-3 px-8 py-4 text-base font-bold rounded-2xl bg-gradient-to-r from-copper to-gold-light text-white shadow-lg shadow-copper/35 hover:shadow-copper/55 hover:-translate-y-0.5 transition-all cursor-pointer"
+                  className="group inline-flex items-center gap-3 px-8 py-4 text-base font-bold rounded-2xl bg-gradient-to-r from-copper to-gold-light text-white shadow-lg shadow-copper/35 hover:shadow-copper/55 hover:-translate-y-0.5 transition-all cursor-pointer"
                 >
                   Accéder au portail
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />

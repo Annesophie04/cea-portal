@@ -7,11 +7,11 @@ export default function DocumentList({ grouped, onEdit, onDelete }) {
   if (entries.length === 0) {
     return (
       <div className="bg-card rounded-2xl border border-border p-16 text-center animate-fade-in">
-        <div className="empty-state-icon w-20 h-20 rounded-2xl bg-gradient-to-br from-copper/15 to-gold/10 border border-copper/20 flex items-center justify-center mx-auto mb-5">
-          <FolderOpen className="w-9 h-9 text-copper" />
+        <div className="w-16 h-16 rounded-2xl bg-surface-alt flex items-center justify-center mx-auto mb-4">
+          <FolderOpen className="w-8 h-8 text-text-light" />
         </div>
-        <p className="text-text-muted text-lg font-bold">Aucun document trouvé</p>
-        <p className="text-text-light text-sm mt-2 max-w-xs mx-auto leading-relaxed">Modifiez vos filtres ou ajoutez un nouveau document pour commencer.</p>
+        <p className="text-text-muted text-lg font-semibold">Aucun document trouvé</p>
+        <p className="text-text-light text-sm mt-1">Modifiez vos filtres ou ajoutez un nouveau document.</p>
       </div>
     );
   }

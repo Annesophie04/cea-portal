@@ -1,20 +1,10 @@
 import { useEffect, useState } from 'react';
-import { Megaphone, Plus, Trash2, Pencil, X, Check, Sparkles, Shield, Zap } from 'lucide-react';
+import { Megaphone, Plus, Trash2, Pencil, X, Check } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 const DEFAULT_MESSAGES = [
-  { text: 'Bienvenue sur le portail officiel C.E.A — Au service de San Andreas', icon: 'shield' },
-  { text: 'Documents, événements, associations — Tout votre pôle réuni en un seul espace', icon: 'zap' },
-  { text: 'Chaque action compte — Construisons ensemble l\'avenir de San Andreas', icon: 'sparkle' },
-  { text: 'Nouveau : exportez vos documents en PDF et Word en un clic', icon: 'zap' },
-  { text: 'Restez organisés — Mettez à jour vos fiches pour une meilleure coordination', icon: 'shield' },
+  'Bienvenue sur le Portail C.E.A — Communication, Événementiel & Association',
 ];
-
-const ICON_MAP = {
-  shield: Shield,
-  zap: Zap,
-  sparkle: Sparkles,
-};
 
 export default function MarqueeBanner() {
   const [annonces, setAnnonces] = useState([]);
@@ -31,7 +21,7 @@ export default function MarqueeBanner() {
         .eq('active', true)
         .order('created_at');
       if (!error && data?.length) setAnnonces(data);
-      else setAnnonces(DEFAULT_MESSAGES.map((m, i) => ({ id: i, message: m.text, icon: m.icon })));
+      else setAnnonces(DEFAULT_MESSAGES.map((m, i) => ({ id: i, message: m })));
     })();
   }, []);
 
@@ -66,57 +56,32 @@ export default function MarqueeBanner() {
     setEditText('');
   };
 
-  const renderSeparator = (key) => (
-    <span key={`sep-${key}`} className="marquee-separator">
-      <span className="marquee-diamond" />
-    </span>
-  );
-
-  const renderMessage = (a, idx) => {
-    const IconComp = ICON_MAP[a.icon] || Sparkles;
-    return (
-      <span key={`msg-${idx}`} className="marquee-item">
-        <IconComp className="w-3 h-3 marquee-item-icon" />
-        <span>{a.message}</span>
-      </span>
-    );
-  };
-
-  const items = annonces.flatMap((a, i) => [
-    renderMessage(a, i),
-    renderSeparator(i),
-  ]);
+  const messages = annonces.map(a => a.message);
+  const text = messages.join('  ★  ');
 
   return (
-    <div className="marquee-banner-wrap">
-      <div className="marquee-banner-inner">
-        {/* Bouton édition */}
+    <div className="marquee-container bg-gradient-to-r from-copper/15 via-gold/10 to-copper/15 dark:from-copper/10 dark:via-gold/8 dark:to-copper/10 dark:bg-[rgba(30,30,42,0.7)] border-b border-copper/20 dark:border-copper/15 overflow-hidden relative group">
+      <div className="max-w-7xl mx-auto flex items-center gap-3 py-1.5 px-4">
         <button
           type="button"
           onClick={() => setEditing(!editing)}
-          className="marquee-edit-btn"
+          className="shrink-0 hover:scale-110 transition-transform"
           title="Gérer les annonces"
         >
-          <Megaphone className="w-3.5 h-3.5" />
+          <Megaphone className="w-3.5 h-3.5 text-copper" />
         </button>
-
-        {/* Piste défilante */}
-        <div className="marquee-track">
-          <div className="marquee-scroll">
-            <div className="marquee-content">{items}</div>
-            <div className="marquee-content" aria-hidden="true">{items}</div>
-          </div>
+        <div className="overflow-hidden flex-1">
+          <span className="marquee-text text-[11px] font-semibold text-text-muted">
+            {text}  ★  {text}
+          </span>
         </div>
       </div>
 
       {/* Panel d'édition */}
       {editing && (
-        <div className="marquee-edit-panel animate-slide-up">
+        <div className="border-t border-copper/20 bg-card px-4 py-3 space-y-3 animate-slide-up">
           <div className="flex items-center justify-between">
-            <p className="text-xs font-bold text-text-muted uppercase tracking-wider flex items-center gap-2">
-              <Sparkles className="w-3.5 h-3.5 text-copper" />
-              Gérer les annonces
-            </p>
+            <p className="text-xs font-bold text-text-muted uppercase tracking-wider">Gérer les annonces</p>
             <button onClick={() => setEditing(false)} className="text-text-light hover:text-primary transition-colors">
               <X className="w-4 h-4" />
             </button>
@@ -125,7 +90,7 @@ export default function MarqueeBanner() {
           {/* Liste */}
           <div className="space-y-2 max-h-48 overflow-y-auto">
             {annonces.map(a => (
-              <div key={a.id} className="marquee-edit-row">
+              <div key={a.id} className="flex items-center gap-2 text-sm">
                 {editId === a.id ? (
                   <>
                     <input
@@ -133,7 +98,7 @@ export default function MarqueeBanner() {
                       value={editText}
                       onChange={e => setEditText(e.target.value)}
                       onKeyDown={e => e.key === 'Enter' && saveEdit(a.id)}
-                      className="flex-1 px-3 py-1.5 rounded-lg border border-border text-sm bg-surface focus:ring-2 focus:ring-copper/30 focus:border-copper/50 transition-all"
+                      className="flex-1 px-3 py-1.5 rounded-lg border border-border text-sm bg-surface"
                       autoFocus
                     />
                     <button onClick={() => saveEdit(a.id)} className="text-success hover:scale-110 transition-transform">
@@ -145,7 +110,7 @@ export default function MarqueeBanner() {
                   </>
                 ) : (
                   <>
-                    <span className="flex-1 text-text-muted truncate text-sm">{a.message}</span>
+                    <span className="flex-1 text-text-muted truncate">{a.message}</span>
                     <button
                       onClick={() => { setEditId(a.id); setEditText(a.message); }}
                       className="text-text-light hover:text-copper transition-colors shrink-0"
@@ -172,11 +137,11 @@ export default function MarqueeBanner() {
               onChange={e => setNewMsg(e.target.value)}
               onKeyDown={e => e.key === 'Enter' && addAnnonce()}
               placeholder="Nouvelle annonce..."
-              className="flex-1 px-3 py-2 rounded-xl border border-border text-sm bg-surface focus:ring-2 focus:ring-copper/30 focus:border-copper/50 transition-all"
+              className="flex-1 px-3 py-2 rounded-xl border border-border text-sm bg-surface"
             />
             <button
               onClick={addAnnonce}
-              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-copper to-gold-light text-white hover:from-gold-light hover:to-copper transition-all shadow-md shadow-copper/20 hover:shadow-copper/40"
+              className="inline-flex items-center gap-1.5 px-4 py-2 text-xs font-bold rounded-xl bg-gradient-to-r from-copper to-gold-light text-white hover:from-gold-light hover:to-copper transition-all"
             >
               <Plus className="w-3.5 h-3.5" /> Ajouter
             </button>

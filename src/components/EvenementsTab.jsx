@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { CalendarDays, Plus, Trash2, Pencil, Save, X, MapPin, Wallet, Users } from 'lucide-react';
+import { CalendarDays, Plus, Trash2, Pencil, Save, X, MapPin, Clock, Users } from 'lucide-react';
 import { useSupabaseData } from '../hooks/useSupabaseData';
 
 const emptyForm = {
@@ -71,7 +71,7 @@ export default function EvenementsTab() {
       </div>
 
       <div className="flex flex-wrap gap-2">
-        <button type="button" onClick={startAdd}
+        <button onClick={startAdd}
           className="inline-flex items-center gap-2 px-4 py-2.5 text-sm font-bold rounded-xl bg-gradient-to-r from-copper to-gold-light text-white hover:from-gold-light hover:to-copper transition-all cursor-pointer shadow-md shadow-copper/20 hover:-translate-y-0.5">
           <Plus className="w-4 h-4" /> Ajouter un événement
         </button>
@@ -92,27 +92,27 @@ export default function EvenementsTab() {
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Titre *</label>
               <input type="text" value={form.titre} onChange={e => set('titre', e.target.value)} placeholder="Nom de l'événement"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Date</label>
               <input type="text" value={form.date} onChange={e => set('date', e.target.value)} placeholder="JJ/MM/AAAA"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Heure</label>
               <input type="text" value={form.heure} onChange={e => set('heure', e.target.value)} placeholder="20h00"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Lieu</label>
               <input type="text" value={form.lieu} onChange={e => set('lieu', e.target.value)} placeholder="Lieu de l'événement"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Organisateur</label>
               <input type="text" value={form.organisateur} onChange={e => set('organisateur', e.target.value)} placeholder="Nom de l'organisateur"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Statut</label>
@@ -124,24 +124,24 @@ export default function EvenementsTab() {
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Budget prévu ($)</label>
               <input type="text" value={form.budget} onChange={e => set('budget', e.target.value)} placeholder="0"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
             </div>
             <div>
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Participants estimés</label>
               <input type="text" value={form.participants} onChange={e => set('participants', e.target.value)} placeholder="Nombre"
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all" />
             </div>
             <div className="md:col-span-3">
               <label className="block text-xs font-semibold text-text-muted mb-1.5">Description</label>
               <textarea value={form.description} onChange={e => set('description', e.target.value)} rows={2} placeholder="Détails de l'événement..."
-                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-card transition-all resize-y" />
+                className="w-full px-3.5 py-2.5 rounded-xl border border-border text-sm bg-surface hover:bg-surface-alt focus:bg-white transition-all resize-y" />
             </div>
           </div>
           <div className="flex gap-2 mt-4">
-            <button type="button" onClick={save} className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-xl bg-gradient-to-r from-copper to-gold-light text-white hover:from-gold-light hover:to-copper transition-all cursor-pointer shadow-md">
+            <button onClick={save} className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-bold rounded-xl bg-gradient-to-r from-copper to-gold-light text-white hover:from-gold-light hover:to-copper transition-all cursor-pointer shadow-md">
               <Save className="w-4 h-4" /> Enregistrer
             </button>
-            <button type="button" onClick={cancel} className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium rounded-xl border border-border text-text-muted hover:bg-surface-alt transition-colors cursor-pointer">
+            <button onClick={cancel} className="inline-flex items-center gap-1.5 px-5 py-2.5 text-sm font-medium rounded-xl border border-border text-text-muted hover:bg-surface-alt transition-colors cursor-pointer">
               <X className="w-4 h-4" /> Annuler
             </button>
           </div>
@@ -184,18 +184,18 @@ export default function EvenementsTab() {
                 )}
                 {evt.budget && (
                   <div className="flex items-center gap-2 text-sm">
-                    <Wallet className="w-3.5 h-3.5 text-copper" />
+                    <Clock className="w-3.5 h-3.5 text-copper" />
                     <span className="text-text-muted">Budget : {evt.budget} $</span>
                   </div>
                 )}
               </div>
               {evt.description && <p className="text-xs text-text-muted mt-3 line-clamp-2">{evt.description}</p>}
               <div className="flex gap-2 mt-4 pt-3 border-t border-border/40">
-                <button type="button" onClick={() => startEdit(evt)}
+                <button onClick={() => startEdit(evt)}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-border text-text-muted hover:bg-surface-alt transition-all cursor-pointer">
                   <Pencil className="w-3 h-3" /> Modifier
                 </button>
-                <button type="button" onClick={() => { if (window.confirm(`Supprimer « ${evt.titre} » ?`)) remove(evt.id); }}
+                <button onClick={() => { if (window.confirm(`Supprimer « ${evt.titre} » ?`)) remove(evt.id); }}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-lg border border-danger/20 text-danger hover:bg-red-50 transition-all cursor-pointer">
                   <Trash2 className="w-3 h-3" /> Supprimer
                 </button>
